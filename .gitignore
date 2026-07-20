@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.playwright-mcp/
+*.log
+github_work_*
+*.pem
+id_rsa*
+id_ed25519*

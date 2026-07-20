@@ -1,0 +1,205 @@
+- generic [ref=f6e6]:
+  - banner [ref=f6e7]:
+    - generic [ref=f6e31]: EvaTeam
+    - generic [ref=f6e8]:
+      - textbox "Поиск" [ref=f6e14]
+      - generic [ref=f6e15] [cursor=pointer]: Войти
+  - generic [ref=f6e17]:
+    - generic [ref=f6e20]:
+      - generic [ref=f6e21]: ДЕРЕВО СТРАНИЦ
+      - tree [ref=f6e26]:
+        - treeitem "EvaTeam Релизы Администрирование Документация EvaProject Документация EvaWiki Документация Service Desk Документация по диаграмме Gantt Документация EvaTest Документация EvaGit Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей Импорт данных Ответы на вопросы" [expanded] [level=1] [ref=f6e33]:
+          - generic [ref=f6e34]:
+            - link "EvaTeam" [ref=f6e40] [cursor=pointer]:
+              - /url: /docs/docs#eva-team
+              - generic "EvaTeam" [ref=f6e42]
+            - generic [ref=f6e43]:
+              - treeitem "Релизы" [level=2] [ref=f6e44]:
+                - link "Релизы" [ref=f6e51] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000586#relizy
+                  - generic "Релизы" [ref=f6e53]
+              - treeitem "Администрирование" [level=2] [ref=f6e54]:
+                - link "Администрирование" [ref=f6e61] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000172#administrirovanie
+                  - generic "Администрирование" [ref=f6e63]
+              - treeitem "Документация EvaProject" [level=2] [ref=f6e64]:
+                - link "Документация EvaProject" [ref=f6e71] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000118#dokumentacziya-eva-project
+                  - generic "Документация EvaProject" [ref=f6e73]
+              - treeitem "Документация EvaWiki" [level=2] [ref=f6e74]:
+                - link "Документация EvaWiki" [ref=f6e81] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000123#dokumentacziya-eva-wiki
+                  - generic "Документация EvaWiki" [ref=f6e83]
+              - treeitem "Документация Service Desk" [level=2] [ref=f6e84]:
+                - link "Документация Service Desk" [ref=f6e91] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000289#dokumentacziya-service-desk
+                  - generic "Документация Service Desk" [ref=f6e93]
+              - treeitem "Документация по диаграмме Gantt" [level=2] [ref=f6e94]:
+                - link "Документация по диаграмме Gantt" [ref=f6e101] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000863#dokumentacziya-po-diagramme-gantt
+                  - generic "Документация по диаграмме Gantt" [ref=f6e103]
+              - treeitem "Документация EvaTest" [level=2] [ref=f6e104]:
+                - link "Документация EvaTest" [ref=f6e111] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001557#dokumentacziya-eva-test
+                  - generic "Документация EvaTest" [ref=f6e113]
+              - treeitem "Документация EvaGit" [level=2] [ref=f6e114]:
+                - link "Документация EvaGit" [ref=f6e121] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001645#dokumentacziya-eva-git
+                  - generic "Документация EvaGit" [ref=f6e123]
+              - treeitem "Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей" [expanded] [level=2] [ref=f6e124]:
+                - generic [ref=f6e125]:
+                  - link "Документация по интеграции и автоматизации" [ref=f6e131] [cursor=pointer]:
+                    - /url: /docs/docs/DOC-000198#dokumentacziya-po-integraczii-i-avtomatizaczii
+                    - generic "Документация по интеграции и автоматизации" [ref=f6e133]
+                  - generic [ref=f6e134]:
+                    - treeitem "Внедрение" [level=3] [ref=f6e135]:
+                      - link "Внедрение" [ref=f6e142] [cursor=pointer]:
+                        - /url: /docs/docs/FL-000189#vnedrenie
+                        - generic "Внедрение" [ref=f6e144]
+                    - treeitem "API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов" [expanded] [level=3] [ref=f6e145]:
+                      - generic [ref=f6e146]:
+                        - link "API" [ref=f6e152] [cursor=pointer]:
+                          - /url: /docs/docs/DOC-000199#api
+                        - generic [ref=f6e155]
+                    - treeitem "Автоматизация" [level=3] [ref=f6e191]:
+                      - link "Автоматизация" [ref=f6e198] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000237#avtomatizacziya
+                        - generic "Автоматизация" [ref=f6e200]
+                    - treeitem "Бизнес-процессы" [level=3] [ref=f6e201]:
+                      - link "Бизнес-процессы" [ref=f6e208] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000197#biznes-proczessy
+                        - generic "Бизнес-процессы" [ref=f6e210]
+                    - treeitem "Кастомизация и плагины" [level=3] [ref=f6e211]:
+                      - link "Кастомизация и плагины" [ref=f6e218] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000409#kastomizacziya-i-plaginy
+                        - generic "Кастомизация и плагины" [ref=f6e220]
+                    - treeitem "Руководство по миграции" [level=3] [ref=f6e221]:
+                      - link "Руководство по миграции" [ref=f6e222] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000221#rukovodstvo-po-migraczii
+                        - generic "Руководство по миграции" [ref=f6e225]
+                    - treeitem "Интеграция с ICAP-сервером" [level=3] [ref=f6e226]:
+                      - link "Интеграция с ICAP-сервером" [ref=f6e227] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001861#integracziya-s-icap-serverom
+                        - generic "Интеграция с ICAP-сервером" [ref=f6e230]
+                    - treeitem "Инструкция по отладке bzPython скриптов на примере VS Code" [level=3] [ref=f6e231]:
+                      - link "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f6e232] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000522#instrukcziya-po-otladke-bz-python-skriptov-na-primere-vs-code
+                        - generic "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f6e235]
+                    - treeitem "iFrame в документах" [level=3] [ref=f6e236]:
+                      - link "iFrame в документах" [ref=f6e237] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001341#i-frame-v-dokumentah
+                        - generic "iFrame в документах" [ref=f6e240]
+                    - treeitem "Описание моделей" [level=3] [ref=f6e241]:
+                      - link "Описание моделей" [ref=f6e242] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000401#opisanie-modelej
+                        - generic "Описание моделей" [ref=f6e245]
+              - treeitem "Импорт данных" [level=2] [ref=f6e246]:
+                - link "Импорт данных" [ref=f6e253] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000231#import-dannyh
+                  - generic "Импорт данных" [ref=f6e255]
+              - treeitem "Ответы на вопросы" [level=2] [ref=f6e256]:
+                - link "Ответы на вопросы" [ref=f6e263] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001525#otvety-na-voprosy
+                  - generic "Ответы на вопросы" [ref=f6e265]
+    - generic [ref=f6e29]:
+      - generic [ref=f6e268]:
+        - generic [ref=f6e270]:
+          - link "EvaTeam /" [ref=f6e271] [cursor=pointer]:
+            - /url: /docs/CmfProject:ef8bb7ee-2916-11ed-b552-d7e524edfc83#eva-team
+            - generic [ref=f6e272]: EvaTeam
+            - generic [ref=f6e273]: /
+          - link "Документация по интеграции и автоматизации /" [ref=f6e274] [cursor=pointer]:
+            - /url: /docs/CmfDocument:2806e680-5904-11ed-9c34-e1b5270eea59#dokumentacziya-po-integraczii-i-avtomatizaczii
+            - generic [ref=f6e275]: Документация по интеграции и автоматизации
+            - generic [ref=f6e276]: /
+          - link "API" [ref=f6e277] [cursor=pointer]:
+            - /url: /docs/CmfDocument:186dff70-5912-11ed-91cf-cf78a90a1ccb#api
+        - button [ref=f6e280] [cursor=pointer]
+        - generic [ref=f6e289]:
+          - banner
+          - heading "Дополнительные опции API запросов" [level=2] [ref=f6e290]
+          - generic [ref=f6e293]:
+            - list [ref=f6e297]:
+              - listitem [ref=f6e298]:
+                - link "no_meta. Опция, выключающая передачу meta в ответ на API запрос" [ref=f6e300] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000695#dopolnitelnye-opczii-api-zaprosov##wcntbcvFqZxkfD
+              - listitem [ref=f6e301]:
+                - link "fields. Параметр загрузки полей объекта" [ref=f6e303] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000695#dopolnitelnye-opczii-api-zaprosov##sLSA2w5wO1IDXO
+              - listitem [ref=f6e304]:
+                - link "slice. Опция возвращает новый список содержащий элементы вырезанные из исходного списка" [ref=f6e306] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000695#dopolnitelnye-opczii-api-zaprosov##wQ8GIp339llmbv
+            - heading "no_meta. Опция, выключающая передачу meta в ответ на API запрос" [level=3] [ref=f6e307]:
+              - text: no_meta. Опция, выключающая передачу meta в ответ на API запрос
+              - button "Копировать ссылку" [ref=f6e308] [cursor=pointer]
+            - paragraph [ref=f6e309]: "Пример:"
+            - paragraph [ref=f6e310]
+            - separator [ref=f6e312]
+            - heading "fields. Параметр загрузки полей объекта" [level=3] [ref=f6e313]:
+              - text: fields. Параметр загрузки полей объекта
+              - button "Копировать ссылку" [ref=f6e314] [cursor=pointer]
+            - table [ref=f6e316]:
+              - rowgroup [ref=f6e317]:
+                - row "Параметр Описание" [ref=f6e318]:
+                  - columnheader "Параметр" [ref=f6e319]:
+                    - paragraph [ref=f6e320]: Параметр
+                  - columnheader "Описание" [ref=f6e321]:
+                    - paragraph [ref=f6e322]: Описание
+                - row "fields = ['*'] Будут выгружены все простые поля объекта" [ref=f6e323]:
+                  - cell "fields = ['*']" [ref=f6e324]:
+                    - paragraph [ref=f6e325]: fields = ['*']
+                  - cell "Будут выгружены все простые поля объекта" [ref=f6e326]:
+                    - paragraph [ref=f6e327]: Будут выгружены все простые поля объекта
+                - row "fields = ['**'] Будут выгружены все простые поля объекта + relation" [ref=f6e328]:
+                  - cell "fields = ['**']" [ref=f6e329]:
+                    - paragraph [ref=f6e330]: fields = ['**']
+                  - cell "Будут выгружены все простые поля объекта + relation" [ref=f6e331]:
+                    - paragraph [ref=f6e332]: Будут выгружены все простые поля объекта + relation
+                - row "fields = ['***'] Будут выгружены все простые поля объекта + relation + m2m поля" [ref=f6e333]:
+                  - cell "fields = ['***']" [ref=f6e334]:
+                    - paragraph [ref=f6e335]: fields = ['***']
+                  - cell "Будут выгружены все простые поля объекта + relation + m2m поля" [ref=f6e336]:
+                    - paragraph [ref=f6e337]: Будут выгружены все простые поля объекта + relation + m2m поля
+            - paragraph [ref=f6e341]: "⁠Пример:"
+            - paragraph [ref=f6e342]
+            - separator [ref=f6e344]
+            - heading "slice. Опция возвращает новый список содержащий элементы вырезанные из исходного списка" [level=3] [ref=f6e345]:
+              - text: slice. Опция возвращает новый список содержащий элементы вырезанные из исходного списка
+              - button "Копировать ссылку" [ref=f6e346] [cursor=pointer]
+            - paragraph [ref=f6e347]: "Пример:"
+            - paragraph [ref=f6e348]: В системе Wiki проект с 5 документами
+            - paragraph [ref=f6e349]
+            - table [ref=f6e352]:
+              - rowgroup [ref=f6e353]:
+                - row "Запрос Ответ" [ref=f6e354]:
+                  - columnheader "Запрос" [ref=f6e355]:
+                    - paragraph [ref=f6e356]: Запрос
+                  - columnheader "Ответ" [ref=f6e357]:
+                    - paragraph [ref=f6e358]: Ответ
+                - row "Получаем список документов в ситеме:" [ref=f6e359]:
+                  - cell "Получаем список документов в ситеме:" [ref=f6e360]:
+                    - paragraph [ref=f6e361]: "Получаем список документов в ситеме:"
+                    - paragraph [ref=f6e362]
+                  - cell [ref=f6e364]:
+                    - paragraph [ref=f6e365]
+                - row "Добавляем в запрос slice для получения трех последних значений:" [ref=f6e367]:
+                  - cell "Добавляем в запрос slice для получения трех последних значений:" [ref=f6e368]:
+                    - paragraph [ref=f6e369]: "Добавляем в запрос slice для получения трех последних значений:"
+                    - paragraph [ref=f6e370]
+                  - cell [ref=f6e373]:
+                    - paragraph [ref=f6e374]
+                - row "Добавляем в запрос slice для среза списка:" [ref=f6e376]:
+                  - cell "Добавляем в запрос slice для среза списка:" [ref=f6e377]:
+                    - paragraph [ref=f6e378]: "Добавляем в запрос slice для среза списка:"
+                    - paragraph [ref=f6e379]
+                  - cell [ref=f6e381]:
+                    - paragraph [ref=f6e382]
+            - paragraph [ref=f6e387]: ⁠
+            - paragraph [ref=f6e388]
+            - paragraph [ref=f6e389]
+            - paragraph [ref=f6e390]
+          - generic [ref=f6e391]: Нет тегов
+          - generic [ref=f6e396]:
+            - generic:
+              - list
+      - contentinfo

@@ -1,0 +1,195 @@
+- generic [ref=f4e6]:
+  - banner [ref=f4e7]:
+    - generic [ref=f4e31]: EvaTeam
+    - generic [ref=f4e8]:
+      - textbox "Поиск" [ref=f4e14]
+      - generic [ref=f4e15] [cursor=pointer]: Войти
+  - generic [ref=f4e17]:
+    - generic [ref=f4e20]:
+      - generic [ref=f4e21]: ДЕРЕВО СТРАНИЦ
+      - tree [ref=f4e26]:
+        - treeitem "EvaTeam Релизы Администрирование Документация EvaProject Документация EvaWiki Документация Service Desk Документация по диаграмме Gantt Документация EvaTest Документация EvaGit Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей Импорт данных Ответы на вопросы" [expanded] [level=1] [ref=f4e33]:
+          - generic [ref=f4e34]:
+            - link "EvaTeam" [ref=f4e40] [cursor=pointer]:
+              - /url: /docs/docs#eva-team
+              - generic "EvaTeam" [ref=f4e42]
+            - generic [ref=f4e43]:
+              - treeitem "Релизы" [level=2] [ref=f4e44]:
+                - link "Релизы" [ref=f4e51] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000586#relizy
+                  - generic "Релизы" [ref=f4e53]
+              - treeitem "Администрирование" [level=2] [ref=f4e54]:
+                - link "Администрирование" [ref=f4e61] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000172#administrirovanie
+                  - generic "Администрирование" [ref=f4e63]
+              - treeitem "Документация EvaProject" [level=2] [ref=f4e64]:
+                - link "Документация EvaProject" [ref=f4e71] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000118#dokumentacziya-eva-project
+                  - generic "Документация EvaProject" [ref=f4e73]
+              - treeitem "Документация EvaWiki" [level=2] [ref=f4e74]:
+                - link "Документация EvaWiki" [ref=f4e81] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000123#dokumentacziya-eva-wiki
+                  - generic "Документация EvaWiki" [ref=f4e83]
+              - treeitem "Документация Service Desk" [level=2] [ref=f4e84]:
+                - link "Документация Service Desk" [ref=f4e91] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000289#dokumentacziya-service-desk
+                  - generic "Документация Service Desk" [ref=f4e93]
+              - treeitem "Документация по диаграмме Gantt" [level=2] [ref=f4e94]:
+                - link "Документация по диаграмме Gantt" [ref=f4e101] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000863#dokumentacziya-po-diagramme-gantt
+                  - generic "Документация по диаграмме Gantt" [ref=f4e103]
+              - treeitem "Документация EvaTest" [level=2] [ref=f4e104]:
+                - link "Документация EvaTest" [ref=f4e111] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001557#dokumentacziya-eva-test
+                  - generic "Документация EvaTest" [ref=f4e113]
+              - treeitem "Документация EvaGit" [level=2] [ref=f4e114]:
+                - link "Документация EvaGit" [ref=f4e121] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001645#dokumentacziya-eva-git
+                  - generic "Документация EvaGit" [ref=f4e123]
+              - treeitem "Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей" [expanded] [level=2] [ref=f4e124]:
+                - generic [ref=f4e125]:
+                  - link "Документация по интеграции и автоматизации" [ref=f4e131] [cursor=pointer]:
+                    - /url: /docs/docs/DOC-000198#dokumentacziya-po-integraczii-i-avtomatizaczii
+                    - generic "Документация по интеграции и автоматизации" [ref=f4e133]
+                  - generic [ref=f4e134]:
+                    - treeitem "Внедрение" [level=3] [ref=f4e135]:
+                      - link "Внедрение" [ref=f4e142] [cursor=pointer]:
+                        - /url: /docs/docs/FL-000189#vnedrenie
+                        - generic "Внедрение" [ref=f4e144]
+                    - treeitem "API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов" [expanded] [level=3] [ref=f4e145]:
+                      - generic [ref=f4e146]:
+                        - link "API" [ref=f4e152] [cursor=pointer]:
+                          - /url: /docs/docs/DOC-000199#api
+                        - generic [ref=f4e155]
+                    - treeitem "Автоматизация" [level=3] [ref=f4e191]:
+                      - link "Автоматизация" [ref=f4e198] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000237#avtomatizacziya
+                        - generic "Автоматизация" [ref=f4e200]
+                    - treeitem "Бизнес-процессы" [level=3] [ref=f4e201]:
+                      - link "Бизнес-процессы" [ref=f4e208] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000197#biznes-proczessy
+                        - generic "Бизнес-процессы" [ref=f4e210]
+                    - treeitem "Кастомизация и плагины" [level=3] [ref=f4e211]:
+                      - link "Кастомизация и плагины" [ref=f4e218] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000409#kastomizacziya-i-plaginy
+                        - generic "Кастомизация и плагины" [ref=f4e220]
+                    - treeitem "Руководство по миграции" [level=3] [ref=f4e221]:
+                      - link "Руководство по миграции" [ref=f4e222] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000221#rukovodstvo-po-migraczii
+                        - generic "Руководство по миграции" [ref=f4e225]
+                    - treeitem "Интеграция с ICAP-сервером" [level=3] [ref=f4e226]:
+                      - link "Интеграция с ICAP-сервером" [ref=f4e227] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001861#integracziya-s-icap-serverom
+                        - generic "Интеграция с ICAP-сервером" [ref=f4e230]
+                    - treeitem "Инструкция по отладке bzPython скриптов на примере VS Code" [level=3] [ref=f4e231]:
+                      - link "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f4e232] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000522#instrukcziya-po-otladke-bz-python-skriptov-na-primere-vs-code
+                        - generic "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f4e235]
+                    - treeitem "iFrame в документах" [level=3] [ref=f4e236]:
+                      - link "iFrame в документах" [ref=f4e237] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001341#i-frame-v-dokumentah
+                        - generic "iFrame в документах" [ref=f4e240]
+                    - treeitem "Описание моделей" [level=3] [ref=f4e241]:
+                      - link "Описание моделей" [ref=f4e242] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000401#opisanie-modelej
+                        - generic "Описание моделей" [ref=f4e245]
+              - treeitem "Импорт данных" [level=2] [ref=f4e246]:
+                - link "Импорт данных" [ref=f4e253] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000231#import-dannyh
+                  - generic "Импорт данных" [ref=f4e255]
+              - treeitem "Ответы на вопросы" [level=2] [ref=f4e256]:
+                - link "Ответы на вопросы" [ref=f4e263] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001525#otvety-na-voprosy
+                  - generic "Ответы на вопросы" [ref=f4e265]
+    - generic [ref=f4e29]:
+      - generic [ref=f4e268]:
+        - generic [ref=f4e270]:
+          - link "EvaTeam /" [ref=f4e271] [cursor=pointer]:
+            - /url: /docs/CmfProject:ef8bb7ee-2916-11ed-b552-d7e524edfc83#eva-team
+            - generic [ref=f4e272]: EvaTeam
+            - generic [ref=f4e273]: /
+          - link "Документация по интеграции и автоматизации /" [ref=f4e274] [cursor=pointer]:
+            - /url: /docs/CmfDocument:2806e680-5904-11ed-9c34-e1b5270eea59#dokumentacziya-po-integraczii-i-avtomatizaczii
+            - generic [ref=f4e275]: Документация по интеграции и автоматизации
+            - generic [ref=f4e276]: /
+          - link "API" [ref=f4e277] [cursor=pointer]:
+            - /url: /docs/CmfDocument:186dff70-5912-11ed-91cf-cf78a90a1ccb#api
+        - button [ref=f4e280] [cursor=pointer]
+        - generic [ref=f4e289]:
+          - banner
+          - heading "Начало работы с API" [level=2] [ref=f4e290]
+          - generic [ref=f4e293]:
+            - list [ref=f4e297]:
+              - listitem [ref=f4e298]:
+                - link "Общее описание" [ref=f4e300] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000200#nachalo-raboty-s-api##cYkcAOm0SFEtny
+              - listitem [ref=f4e301]:
+                - link "Получение токена" [ref=f4e303] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000200#nachalo-raboty-s-api##MHnateN88Uk7Jt
+              - listitem [ref=f4e304]:
+                - link "Панель токенов" [ref=f4e306] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000200#nachalo-raboty-s-api##cRd9r0zoUvl8vn
+              - listitem [ref=f4e307]:
+                - link "Коды ответов системы" [ref=f4e309] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000200#nachalo-raboty-s-api##MH8lCW5wXVSQzq
+            - heading "Общее описание" [level=2] [ref=f4e310]:
+              - button "Копировать ссылку" [ref=f4e312] [cursor=pointer]
+            - paragraph [ref=f4e313]:
+              - generic [ref=f4e314]: "Внешние системы взаимодействуют с Системой посредством API. При взаимодействии с внешними системами вызываются методы, описанные ниже. Для использования API необходимо пройти аутентификацию и получить токен. Далее этот токен необходимо будет передавать в запросе в http заголовке в формате:"
+            - generic [ref=f4e315]: "Authorization: Bearer {Ваш токен}"
+            - heading "Получение токена" [level=2] [ref=f4e317]:
+              - text: Получение токена
+              - button "Копировать ссылку" [ref=f4e318] [cursor=pointer]
+            - list [ref=f4e319]:
+              - listitem [ref=f4e320]: Авторизоваться под учетной записью
+              - listitem [ref=f4e321]: Зайти в настройки пользователя, нажав кнопку "Моя страница"
+              - listitem [ref=f4e326]:
+                - text: Открыть вкладку
+                - strong [ref=f4e327]: "\"Безопасность\""
+              - listitem [ref=f4e328]:
+                - text: Нажать кнопку
+                - strong [ref=f4e329]: "\"Сгенерировать API токен\""
+              - listitem [ref=f4e331]:
+                - text: В открывшемся окне, нажать кнопку
+                - strong [ref=f4e332]: "\"Создать токен API\""
+              - listitem [ref=f4e334]:
+                - text: В новом окне добавить имя токена и срок его жизни, потом нажать еще раз
+                - strong [ref=f4e335]: "\"Создать токен API\""
+            - paragraph [ref=f4e337]
+            - paragraph [ref=f4e341]: Полученный токен необходимо сохранить себе локально в текстовый файл. В системе EvaTeam хранится только хэш данного токена и восстановить его невозможно.При утрате токена необходимо будет проводить генерацию заново.
+            - paragraph [ref=f4e342]
+            - paragraph [ref=f4e343]
+            - paragraph [ref=f4e344]
+            - paragraph [ref=f4e346]
+            - heading "Панель токенов" [level=2] [ref=f4e347]:
+              - text: Панель токенов
+              - button "Копировать ссылку" [ref=f4e348] [cursor=pointer]
+            - paragraph [ref=f4e349]
+            - list [ref=f4e351]:
+              - listitem [ref=f4e352]: Имя токена
+              - listitem [ref=f4e353]: Дата создания токена
+              - listitem [ref=f4e354]: Дата, до которой действует токен
+              - listitem [ref=f4e355]: Кнопка отзыва токена
+              - listitem [ref=f4e356]: Кнопка создания нового токена
+            - heading "Коды ответов системы" [level=2] [ref=f4e357]:
+              - text: Коды ответов системы
+              - button "Копировать ссылку" [ref=f4e358] [cursor=pointer]
+            - paragraph [ref=f4e359]:
+              - text: "При выполнении запросов могут поступать следующие HTTP коды:"
+              - generic [ref=f4e360]: 200 – запрос выполнен успешно;
+              - generic [ref=f4e361]: 401 – неавторизованный запрос, требуется авторизация;
+              - generic [ref=f4e362]: 500 – внутренняя ошибка.
+            - paragraph [ref=f4e363]
+            - paragraph [ref=f4e364]:
+              - text: Код ошибки приходит в заголовке ответа. Текст ошибки приходит в теле ответа в виде
+              - generic [ref=f4e365]: JSON
+              - text: "строки:"
+            - generic [ref=f4e366]: "{\"error\": {\"code\": code, \"message\": message},}"
+            - paragraph [ref=f4e368]:
+              - text: Текст ошибки отображается пользователю, если ошибка происходит при интерактивном взаимодействии (при фоновых операциях ошибка не отображается).
+              - generic [ref=f4e369]: Для получения/создания/модификации/удаления используется только метод POST
+          - generic [ref=f4e370]: Нет тегов
+          - generic [ref=f4e375]:
+            - generic:
+              - list
+      - contentinfo

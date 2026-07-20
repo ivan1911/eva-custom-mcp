@@ -1,0 +1,116 @@
+- generic [ref=e6]:
+  - banner [ref=e7]:
+    - generic [ref=e31]: EvaTeam
+    - generic [ref=e8]:
+      - textbox "Поиск" [ref=e14]
+      - generic [ref=e15] [cursor=pointer]: Войти
+  - generic [ref=e17]:
+    - generic [ref=e20]:
+      - generic [ref=e21]: ДЕРЕВО СТРАНИЦ
+      - tree [ref=e26]:
+        - treeitem "EvaTeam Релизы Администрирование Документация EvaProject Документация EvaWiki Документация Service Desk Документация по диаграмме Gantt Документация EvaTest Документация EvaGit Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей Импорт данных Ответы на вопросы" [expanded] [level=1] [ref=e33]:
+          - generic [ref=e34]:
+            - link "EvaTeam" [ref=e40] [cursor=pointer]:
+              - /url: /docs/docs#eva-team
+              - generic "EvaTeam" [ref=e42]
+            - generic [ref=e43]:
+              - treeitem "Релизы" [level=2] [ref=e44]:
+                - link "Релизы" [ref=e51] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000586#relizy
+                  - generic "Релизы" [ref=e53]
+              - treeitem "Администрирование" [level=2] [ref=e54]:
+                - link "Администрирование" [ref=e61] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000172#administrirovanie
+                  - generic "Администрирование" [ref=e63]
+              - treeitem "Документация EvaProject" [level=2] [ref=e64]:
+                - link "Документация EvaProject" [ref=e71] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000118#dokumentacziya-eva-project
+                  - generic "Документация EvaProject" [ref=e73]
+              - treeitem "Документация EvaWiki" [level=2] [ref=e74]:
+                - link "Документация EvaWiki" [ref=e81] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000123#dokumentacziya-eva-wiki
+                  - generic "Документация EvaWiki" [ref=e83]
+              - treeitem "Документация Service Desk" [level=2] [ref=e84]:
+                - link "Документация Service Desk" [ref=e91] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000289#dokumentacziya-service-desk
+                  - generic "Документация Service Desk" [ref=e93]
+              - treeitem "Документация по диаграмме Gantt" [level=2] [ref=e94]:
+                - link "Документация по диаграмме Gantt" [ref=e101] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000863#dokumentacziya-po-diagramme-gantt
+                  - generic "Документация по диаграмме Gantt" [ref=e103]
+              - treeitem "Документация EvaTest" [level=2] [ref=e104]:
+                - link "Документация EvaTest" [ref=e111] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001557#dokumentacziya-eva-test
+                  - generic "Документация EvaTest" [ref=e113]
+              - treeitem "Документация EvaGit" [level=2] [ref=e114]:
+                - link "Документация EvaGit" [ref=e121] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001645#dokumentacziya-eva-git
+                  - generic "Документация EvaGit" [ref=e123]
+              - treeitem "Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей" [expanded] [level=2] [ref=e124]:
+                - generic [ref=e125]:
+                  - link "Документация по интеграции и автоматизации" [ref=e131] [cursor=pointer]:
+                    - /url: /docs/docs/DOC-000198#dokumentacziya-po-integraczii-i-avtomatizaczii
+                    - generic "Документация по интеграции и автоматизации" [ref=e133]
+                  - generic [ref=e134]:
+                    - treeitem "Внедрение" [level=3] [ref=e135]
+                    - treeitem "API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов" [expanded] [level=3] [ref=e145]
+                    - treeitem "Автоматизация" [level=3] [ref=e191]
+                    - treeitem "Бизнес-процессы" [level=3] [ref=e201]
+                    - treeitem "Кастомизация и плагины" [level=3] [ref=e211]
+                    - treeitem "Руководство по миграции" [level=3] [ref=e221]
+                    - treeitem "Интеграция с ICAP-сервером" [level=3] [ref=e226]
+                    - treeitem "Инструкция по отладке bzPython скриптов на примере VS Code" [level=3] [ref=e231]
+                    - treeitem "iFrame в документах" [level=3] [ref=e236]
+                    - treeitem "Описание моделей" [level=3] [ref=e241]
+              - treeitem "Импорт данных" [level=2] [ref=e246]:
+                - link "Импорт данных" [ref=e253] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000231#import-dannyh
+                  - generic "Импорт данных" [ref=e255]
+              - treeitem "Ответы на вопросы" [level=2] [ref=e256]:
+                - link "Ответы на вопросы" [ref=e263] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001525#otvety-na-voprosy
+                  - generic "Ответы на вопросы" [ref=e265]
+    - generic [ref=e29]:
+      - generic [ref=e268]:
+        - generic [ref=e270]:
+          - link "EvaTeam /" [ref=e271] [cursor=pointer]:
+            - /url: /docs/CmfProject:ef8bb7ee-2916-11ed-b552-d7e524edfc83#eva-team
+            - generic [ref=e272]: EvaTeam
+            - generic [ref=e273]: /
+          - link "Документация по интеграции и автоматизации" [ref=e274] [cursor=pointer]:
+            - /url: /docs/CmfDocument:2806e680-5904-11ed-9c34-e1b5270eea59#dokumentacziya-po-integraczii-i-avtomatizaczii
+        - button [ref=e277] [cursor=pointer]
+        - generic [ref=e286]:
+          - banner
+          - heading "API" [level=2] [ref=e287]
+          - generic [ref=e290]:
+            - paragraph [ref=e291]
+            - generic [ref=e292]:
+              - list [ref=e293]:
+                - listitem [ref=e294]:
+                  - link "Начало работы с API" [ref=e295] [cursor=pointer]:
+                    - /url: docs/CmfDocument:8de0005e-5913-11ed-91cf-cf78a90a1ccb
+                - listitem [ref=e296]:
+                  - link "Правила работы с API" [ref=e297] [cursor=pointer]:
+                    - /url: docs/CmfDocument:1b5e4c50-5915-11ed-91cf-cf78a90a1ccb
+                - listitem [ref=e298]:
+                  - link "API Specification" [ref=e299] [cursor=pointer]:
+                    - /url: docs/CmfDocument:d22c35d4-581b-11f0-bfd0-00161e12a413
+                - listitem [ref=e300]:
+                  - link "Дополнительные опции API запросов" [ref=e301] [cursor=pointer]:
+                    - /url: docs/CmfDocument:f08bdcf0-a0a7-11ee-933f-00161e122a7b
+                - listitem [ref=e302]:
+                  - link "Справочник методов" [ref=e303] [cursor=pointer]:
+                    - /url: docs/CmfDocument:e0ac59b8-5918-11ed-91cf-cf78a90a1ccb
+                - listitem [ref=e304]:
+                  - link "Матрица прав проектных сущностей" [ref=e305] [cursor=pointer]:
+                    - /url: docs/CmfDocument:3b109968-2415-11f0-b749-00161e12cff9
+                - listitem [ref=e306]:
+                  - link "Примеры API запросов" [ref=e307] [cursor=pointer]:
+                    - /url: docs/CmfDocument:31966430-7f08-11ed-88ab-2315ed926a69
+              - paragraph [ref=e308]
+          - generic [ref=e309]: Нет тегов
+          - generic [ref=e311]:
+            - generic:
+              - list
+      - contentinfo

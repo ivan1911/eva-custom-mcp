@@ -1,0 +1,251 @@
+- generic [ref=f5e6]:
+  - banner [ref=f5e7]:
+    - generic [ref=f5e31]: EvaTeam
+    - generic [ref=f5e8]:
+      - textbox "Поиск" [ref=f5e14]
+      - generic [ref=f5e15] [cursor=pointer]: Войти
+  - generic [ref=f5e17]:
+    - generic [ref=f5e20]:
+      - generic [ref=f5e21]: ДЕРЕВО СТРАНИЦ
+      - tree [ref=f5e26]:
+        - treeitem "EvaTeam Релизы Администрирование Документация EvaProject Документация EvaWiki Документация Service Desk Документация по диаграмме Gantt Документация EvaTest Документация EvaGit Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей Импорт данных Ответы на вопросы" [expanded] [level=1] [ref=f5e33]:
+          - generic [ref=f5e34]:
+            - link "EvaTeam" [ref=f5e40] [cursor=pointer]:
+              - /url: /docs/docs#eva-team
+              - generic "EvaTeam" [ref=f5e42]
+            - generic [ref=f5e43]:
+              - treeitem "Релизы" [level=2] [ref=f5e44]:
+                - link "Релизы" [ref=f5e51] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000586#relizy
+                  - generic "Релизы" [ref=f5e53]
+              - treeitem "Администрирование" [level=2] [ref=f5e54]:
+                - link "Администрирование" [ref=f5e61] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000172#administrirovanie
+                  - generic "Администрирование" [ref=f5e63]
+              - treeitem "Документация EvaProject" [level=2] [ref=f5e64]:
+                - link "Документация EvaProject" [ref=f5e71] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000118#dokumentacziya-eva-project
+                  - generic "Документация EvaProject" [ref=f5e73]
+              - treeitem "Документация EvaWiki" [level=2] [ref=f5e74]:
+                - link "Документация EvaWiki" [ref=f5e81] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000123#dokumentacziya-eva-wiki
+                  - generic "Документация EvaWiki" [ref=f5e83]
+              - treeitem "Документация Service Desk" [level=2] [ref=f5e84]:
+                - link "Документация Service Desk" [ref=f5e91] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000289#dokumentacziya-service-desk
+                  - generic "Документация Service Desk" [ref=f5e93]
+              - treeitem "Документация по диаграмме Gantt" [level=2] [ref=f5e94]:
+                - link "Документация по диаграмме Gantt" [ref=f5e101] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000863#dokumentacziya-po-diagramme-gantt
+                  - generic "Документация по диаграмме Gantt" [ref=f5e103]
+              - treeitem "Документация EvaTest" [level=2] [ref=f5e104]:
+                - link "Документация EvaTest" [ref=f5e111] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001557#dokumentacziya-eva-test
+                  - generic "Документация EvaTest" [ref=f5e113]
+              - treeitem "Документация EvaGit" [level=2] [ref=f5e114]:
+                - link "Документация EvaGit" [ref=f5e121] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001645#dokumentacziya-eva-git
+                  - generic "Документация EvaGit" [ref=f5e123]
+              - treeitem "Документация по интеграции и автоматизации Внедрение API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов Автоматизация Бизнес-процессы Кастомизация и плагины Руководство по миграции Интеграция с ICAP-сервером Инструкция по отладке bzPython скриптов на примере VS Code iFrame в документах Описание моделей" [expanded] [level=2] [ref=f5e124]:
+                - generic [ref=f5e125]:
+                  - link "Документация по интеграции и автоматизации" [ref=f5e131] [cursor=pointer]:
+                    - /url: /docs/docs/DOC-000198#dokumentacziya-po-integraczii-i-avtomatizaczii
+                    - generic "Документация по интеграции и автоматизации" [ref=f5e133]
+                  - generic [ref=f5e134]:
+                    - treeitem "Внедрение" [level=3] [ref=f5e135]:
+                      - link "Внедрение" [ref=f5e142] [cursor=pointer]:
+                        - /url: /docs/docs/FL-000189#vnedrenie
+                        - generic "Внедрение" [ref=f5e144]
+                    - treeitem "API Начало работы с API Правила работы с API API Specification Дополнительные опции API запросов Справочник методов Матрица прав проектных сущностей Примеры API запросов" [expanded] [level=3] [ref=f5e145]:
+                      - generic [ref=f5e146]:
+                        - link "API" [ref=f5e152] [cursor=pointer]:
+                          - /url: /docs/docs/DOC-000199#api
+                        - generic [ref=f5e155]
+                    - treeitem "Автоматизация" [level=3] [ref=f5e191]:
+                      - link "Автоматизация" [ref=f5e198] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000237#avtomatizacziya
+                        - generic "Автоматизация" [ref=f5e200]
+                    - treeitem "Бизнес-процессы" [level=3] [ref=f5e201]:
+                      - link "Бизнес-процессы" [ref=f5e208] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000197#biznes-proczessy
+                        - generic "Бизнес-процессы" [ref=f5e210]
+                    - treeitem "Кастомизация и плагины" [level=3] [ref=f5e211]:
+                      - link "Кастомизация и плагины" [ref=f5e218] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000409#kastomizacziya-i-plaginy
+                        - generic "Кастомизация и плагины" [ref=f5e220]
+                    - treeitem "Руководство по миграции" [level=3] [ref=f5e221]:
+                      - link "Руководство по миграции" [ref=f5e222] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000221#rukovodstvo-po-migraczii
+                        - generic "Руководство по миграции" [ref=f5e225]
+                    - treeitem "Интеграция с ICAP-сервером" [level=3] [ref=f5e226]:
+                      - link "Интеграция с ICAP-сервером" [ref=f5e227] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001861#integracziya-s-icap-serverom
+                        - generic "Интеграция с ICAP-сервером" [ref=f5e230]
+                    - treeitem "Инструкция по отладке bzPython скриптов на примере VS Code" [level=3] [ref=f5e231]:
+                      - link "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f5e232] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000522#instrukcziya-po-otladke-bz-python-skriptov-na-primere-vs-code
+                        - generic "Инструкция по отладке bzPython скриптов на примере VS Code" [ref=f5e235]
+                    - treeitem "iFrame в документах" [level=3] [ref=f5e236]:
+                      - link "iFrame в документах" [ref=f5e237] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-001341#i-frame-v-dokumentah
+                        - generic "iFrame в документах" [ref=f5e240]
+                    - treeitem "Описание моделей" [level=3] [ref=f5e241]:
+                      - link "Описание моделей" [ref=f5e242] [cursor=pointer]:
+                        - /url: /docs/docs/DOC-000401#opisanie-modelej
+                        - generic "Описание моделей" [ref=f5e245]
+              - treeitem "Импорт данных" [level=2] [ref=f5e246]:
+                - link "Импорт данных" [ref=f5e253] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000231#import-dannyh
+                  - generic "Импорт данных" [ref=f5e255]
+              - treeitem "Ответы на вопросы" [level=2] [ref=f5e256]:
+                - link "Ответы на вопросы" [ref=f5e263] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-001525#otvety-na-voprosy
+                  - generic "Ответы на вопросы" [ref=f5e265]
+    - generic [ref=f5e29]:
+      - generic [ref=f5e268]:
+        - generic [ref=f5e270]:
+          - link "EvaTeam /" [ref=f5e271] [cursor=pointer]:
+            - /url: /docs/CmfProject:ef8bb7ee-2916-11ed-b552-d7e524edfc83#eva-team
+            - generic [ref=f5e272]: EvaTeam
+            - generic [ref=f5e273]: /
+          - link "Документация по интеграции и автоматизации /" [ref=f5e274] [cursor=pointer]:
+            - /url: /docs/CmfDocument:2806e680-5904-11ed-9c34-e1b5270eea59#dokumentacziya-po-integraczii-i-avtomatizaczii
+            - generic [ref=f5e275]: Документация по интеграции и автоматизации
+            - generic [ref=f5e276]: /
+          - link "API" [ref=f5e277] [cursor=pointer]:
+            - /url: /docs/CmfDocument:186dff70-5912-11ed-91cf-cf78a90a1ccb#api
+        - button [ref=f5e280] [cursor=pointer]
+        - generic [ref=f5e289]:
+          - banner
+          - heading "Правила работы с API" [level=2] [ref=f5e290]
+          - generic [ref=f5e293]:
+            - list [ref=f5e297]:
+              - listitem [ref=f5e298]:
+                - link "Схема" [ref=f5e300] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000201#pravila-raboty-s-api##h99p2mCO2ikL6I
+              - listitem [ref=f5e301]:
+                - link "Отправка запроса на сервер" [ref=f5e303] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000201#pravila-raboty-s-api##iV0ajqMdX8Uefx
+              - listitem [ref=f5e304]:
+                - link "Структура тела запроса" [ref=f5e306] [cursor=pointer]:
+                  - /url: /docs/docs/DOC-000201#pravila-raboty-s-api##h9hcLNV5vHzHgf
+                - list [ref=f5e307]:
+                  - listitem [ref=f5e308]:
+                    - link "Структура ответа. Успешное выполнение" [ref=f5e310] [cursor=pointer]:
+                      - /url: /docs/docs/DOC-000201#pravila-raboty-s-api##h9zu20GfkGcrmi
+                  - listitem [ref=f5e311]:
+                    - link "Ошибка при выполнении" [ref=f5e313] [cursor=pointer]:
+                      - /url: /docs/docs/DOC-000201#pravila-raboty-s-api##h9NVNdZsl48LzH
+            - heading "Схема" [level=2] [ref=f5e314]:
+              - button "Копировать ссылку" [ref=f5e316] [cursor=pointer]
+            - paragraph [ref=f5e317]:
+              - text: "При работе с API запросы необходимо отправлять по адресу:"
+              - emphasis [ref=f5e318]:
+                - strong [ref=f5e319]: "https://{your-domain}/api"
+            - paragraph [ref=f5e320]:
+              - generic [ref=f5e321]: Все запросы принимаются по https в кодировке UTF-8. Ответ формируется в формате JSON-RPC 2.2.
+              - generic [ref=f5e322]: Данные типа «Дата» указываются в формате «Y-m-d».
+            - heading "Отправка запроса на сервер" [level=2] [ref=f5e323]:
+              - text: Отправка запроса на сервер
+              - button "Копировать ссылку" [ref=f5e324] [cursor=pointer]
+            - paragraph [ref=f5e325]:
+              - generic [ref=f5e326]:
+                - text: При формировании запросов
+                - strong [ref=f5e327]: токен
+                - text: отправляются на сервер в
+                - strong [ref=f5e328]: заголовке(header)
+                - text: http запроса в атрибуте
+                - strong [ref=f5e329]: Authorization
+                - text: со значением Bearer
+                - strong [ref=f5e330]: "{Ваш токен}"
+            - paragraph [ref=f5e331]: "Пример запроса:"
+            - generic [ref=f5e332]: "curl -k 'https://test.evateam.ru/api/' -X POST -H \"Content-Type: application/json\" --data-raw '{ \"jsonrpc\": \"2.2\", \"method\": \"CmfTask.list\", \"kwargs\": {\"filter\": [\"code\", \"==\", \"DEV-000003\"]} }' -H 'Authorization: Bearer {Ваш токен}'"
+            - heading "Структура тела запроса" [level=2] [ref=f5e334]:
+              - text: Структура тела запроса
+              - button "Копировать ссылку" [ref=f5e335] [cursor=pointer]
+            - paragraph [ref=f5e336]:
+              - text: Все передаваемые данные — простые записи, сериализованные в JSON.
+              - generic [ref=f5e337]: Запрос — это вызов определенного метода, предоставляемого удаленной системой.
+            - generic [ref=f5e338]: "{ \"jsonrpc\": \"2.2\", \"method\": \"\", \"args\": [], \"kwargs\": { \"filter\": [], \"fields\": [], ... }, \"callid\":\"Необязательный идентификатор запроса\" }"
+            - paragraph [ref=f5e340]:
+              - strong [ref=f5e342]: "Описание полей запроса:"
+            - list [ref=f5e343]:
+              - listitem [ref=f5e344]:
+                - generic [ref=f5e345]:
+                  - emphasis [ref=f5e346]: jsonrpc
+                  - text: —
+                - text: строка, указывающая версию протокола JSON-RPC;
+                - generic [ref=f5e347]:
+                  - emphasis [ref=f5e348]: method
+                  - text: — строка, содержащая имя вызываемого метода;
+              - listitem [ref=f5e349]:
+                - generic [ref=f5e350]: args — позиционные аргументы;
+              - listitem [ref=f5e351]:
+                - generic [ref=f5e352]:
+                  - emphasis [ref=f5e353]: kwargs
+                  - text: — словарь с именованными аргументами
+                - list [ref=f5e354]:
+                  - list [ref=f5e355]:
+                    - listitem [ref=f5e356]:
+                      - generic [ref=f5e359]:
+                        - emphasis [ref=f5e360]: fields
+                        - text: — список мета-правил для указания какие поля необходимо загрузить (можно не указывать);
+                    - listitem [ref=f5e361]:
+                      - generic [ref=f5e364]:
+                        - emphasis [ref=f5e365]: filter
+                        - text: — массив в формате BQL, для фильтрации результата;
+            - heading "Структура ответа. Успешное выполнение" [level=3] [ref=f5e366]:
+              - text: Структура ответа. Успешное выполнение
+              - button "Копировать ссылку" [ref=f5e367] [cursor=pointer]
+            - generic [ref=f5e368]: "{ \"jsonrpc\": \"2.2\", \"result\": \"\", \"meta\": \"\", \"callid\": \"\", \"profiler_data\": \"\", \"alert\": \"\", \"abort\": \"\" }"
+            - paragraph [ref=f5e370]:
+              - strong [ref=f5e371]: "Описание полей ответа:"
+            - paragraph [ref=f5e372]:
+              - generic [ref=f5e373]:
+                - emphasis [ref=f5e374]: jsonrpc
+                - text: — строка, указывающая версию протокола JSON-RPC;
+              - generic [ref=f5e375]:
+                - emphasis [ref=f5e376]: result
+                - text: — словарь с результатом ответа в формате json;
+              - generic [ref=f5e377]:
+                - emphasis [ref=f5e378]: meta
+                - text: — описание полей, для удобства использования на frontend;
+              - generic [ref=f5e379]:
+                - emphasis [ref=f5e380]: callid
+                - text: — значение, которое используется для установки соответствия между запросом и ответом(необязательно);
+              - generic [ref=f5e381]:
+                - emphasis [ref=f5e382]: profiler_data
+                - text: — информация о выполнении запроса;
+            - paragraph [ref=f5e383]:
+              - generic [ref=f5e384]:
+                - emphasis [ref=f5e385]: alert
+                - text: — уведомление для frontend;
+              - generic [ref=f5e386]:
+                - emphasis [ref=f5e387]: abort
+                - text: — уведомление об ошибке;
+            - heading "Ошибка при выполнении" [level=3] [ref=f5e388]:
+              - text: Ошибка при выполнении
+              - button "Копировать ссылку" [ref=f5e389] [cursor=pointer]
+            - generic [ref=f5e390]: "{ \"jsonrpc\": \"2.2\", \"error\": {\"code\": code, \"message\": message}, \"alert\": \"\", \"callid\": \"Идентификатор запроса, который вызвал ошибку\" }"
+            - paragraph [ref=f5e392]:
+              - strong [ref=f5e393]: "Описание полей ошибки:"
+            - paragraph [ref=f5e394]:
+              - generic [ref=f5e395]:
+                - emphasis [ref=f5e396]: jsonrpc
+                - text: – строка, указывающая версию протокола JSON-RPC;
+              - generic [ref=f5e397]:
+                - emphasis [ref=f5e398]: error
+                - text: – code – код ошибки и message – сообщение
+              - generic [ref=f5e399]:
+                - text: ;
+                - emphasis [ref=f5e400]: alert
+                - text: – уведомление для frontend
+              - text: ;
+            - paragraph [ref=f5e401]
+            - paragraph [ref=f5e402]
+            - paragraph [ref=f5e403]
+          - generic [ref=f5e404]: Нет тегов
+          - generic [ref=f5e409]:
+            - generic:
+              - list
+      - contentinfo
