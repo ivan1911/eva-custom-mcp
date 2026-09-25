@@ -10,7 +10,8 @@
   "files": [
     "dist",
     "docs/eva_api",
-    "README.md"
+    "README.md",
+    "README.ru.md"
   ],
   "scripts": {
     "build": "tsc",

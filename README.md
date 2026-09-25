@@ -2,6 +2,8 @@
 
 [![npm](https://img.shields.io/npm/v/eva-custom-mcp)](https://www.npmjs.com/package/eva-custom-mcp)
 
+[Русская версия](https://github.com/ivan1911/eva-custom-mcp/blob/main/README.ru.md)
+
 MCP server that connects AI assistants (Claude Desktop, Claude Code, Cursor, and other MCP clients) to
 [EvaTeam](https://evateam.ru): search and edit tasks, work with wiki documents, and read the public EvaTeam glossary.
 
@@ -79,7 +81,7 @@ Then use `"command": "eva-custom-mcp"` with no `args` in the client config.
 ### Updating
 
 `npx` can keep using a cached copy. To always start the newest version, use
-`"args": ["-y", "eva-custom-mcp@latest"]`, or pin a version such as `eva-custom-mcp@0.1.2`.
+`"args": ["-y", "eva-custom-mcp@latest"]`, or pin a version such as `eva-custom-mcp@0.1.3`.
 With a global install, run `npm install -g eva-custom-mcp@latest`.
 
 ## Configuration
