@@ -1,19 +1,34 @@
 # eva-custom-mcp
 
-Custom MCP server for EvaTeam glossary pages, project tasks, and wiki documents.
+[![npm](https://img.shields.io/npm/v/eva-custom-mcp)](https://www.npmjs.com/package/eva-custom-mcp)
 
-## Local usage
+MCP server that connects AI assistants (Claude Desktop, Claude Code, Cursor, and other MCP clients) to
+[EvaTeam](https://evateam.ru): search and edit tasks, work with wiki documents, and read the public EvaTeam glossary.
 
-```bash
-npm install
-npm run build
-npm start
-```
+## Requirements
 
-Glossary tools always read public pages from `https://www.evateam.ru` (override with `EVA_GLOSSARY_URL`),
-without a token, so they keep working when `EVA_BASE_URL` points at your company instance.
+- [Node.js](https://nodejs.org) 18 or newer (check with `node -v`). `npx` comes with Node.js.
+- For project, task, and wiki tools: your EvaTeam address (for example `https://yourcompany.evateam.ru`)
+  and an API token.
 
-## MCP client config
+Without a token the server still starts, but only the glossary tools are available.
+
+### Getting an API token
+
+In EvaTeam, open your personal profile card, go to the **Security** section, and generate an API token.
+The token has the same permissions as your account, so keep it private.
+
+## Installation
+
+You don't need to download or build anything: the MCP client starts the server from npm with `npx`.
+Add it to your client using one of the options below, then restart the client.
+
+### Claude Desktop
+
+Open **Settings → Developer → Edit Config**, or edit the file directly:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
@@ -30,35 +45,84 @@ without a token, so they keep working when `EVA_BASE_URL` points at your company
 }
 ```
 
-For local development before publishing:
+If the file already has other servers, add `"eva": { ... }` inside the existing `mcpServers` object.
 
-```json
-{
-  "mcpServers": {
-    "eva": {
-      "command": "node",
-      "args": ["/absolute/path/to/eva-custom-mcp/dist/index.js"]
-    }
-  }
-}
+On Windows, if the server fails to start with `npx` not found, use `"command": "cmd"` and
+`"args": ["/c", "npx", "-y", "eva-custom-mcp"]`.
+
+### Claude Code
+
+```bash
+claude mcp add --transport stdio --scope user \
+  --env EVA_BASE_URL=https://yourcompany.evateam.ru \
+  --env EVA_API_TOKEN=your-token \
+  eva -- npx -y eva-custom-mcp
 ```
 
+Check the connection with `claude mcp list` or `/mcp` inside Claude Code.
+
+### Cursor and other MCP clients
+
+Use the same JSON as for Claude Desktop. In Cursor it goes into `~/.cursor/mcp.json`
+(all projects) or `.cursor/mcp.json` (one project).
+
+### Global install (optional)
+
+If you prefer not to use `npx`:
+
+```bash
+npm install -g eva-custom-mcp
+```
+
+Then use `"command": "eva-custom-mcp"` with no `args` in the client config.
+
+### Updating
+
+`npx` can keep using a cached copy. To always start the newest version, use
+`"args": ["-y", "eva-custom-mcp@latest"]`, or pin a version such as `eva-custom-mcp@0.1.2`.
+With a global install, run `npm install -g eva-custom-mcp@latest`.
+
+## Configuration
+
+All settings are environment variables, passed through the `env` block of the client config.
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `EVA_BASE_URL` | For EvaTeam tools | Your EvaTeam address, for example `https://yourcompany.evateam.ru`. |
+| `EVA_API_TOKEN` | For EvaTeam tools | API token. Enables project, task, and document tools. |
+| `EVA_UPLOAD_ROOT` | No | Absolute path to a folder. Enables `document_attachment_upload` for files inside this folder only. Uploads are off when unset. |
+| `EVA_GLOSSARY_URL` | No | Site for the glossary tools. Defaults to `https://www.evateam.ru`; the token is never sent there. |
+
+## Checking that it works
+
+After restarting the client, ask the assistant something like *"Show my EvaTeam projects"*.
+It should call `project_list`.
+
+To test the server without an AI client, use the MCP Inspector:
+
+```bash
+npx @modelcontextprotocol/inspector \
+  -e EVA_BASE_URL=https://yourcompany.evateam.ru -e EVA_API_TOKEN=your-token \
+  npx -y eva-custom-mcp
+```
+
+## Troubleshooting
+
+- **Only `glossary_*` tools are listed**: `EVA_API_TOKEN` is not set or not passed to the server.
+  Check the `env` block and restart the client.
+- **`401`/`403` errors**: the token is wrong, expired, or belongs to another EvaTeam instance. Check `EVA_BASE_URL`.
+- **Server does not start**: check that `node -v` is 18 or newer, and that `npx` works in a terminal.
+- **`document_attachment_upload` is missing**: set `EVA_UPLOAD_ROOT`. Uploads are limited to that folder.
+
 ## Tools
+
+Glossary tools:
 
 - `glossary_article_get`: fetch a glossary article by slug or URL, for example `api`.
 - `glossary_search`: resolve a glossary term to an article.
 
-EvaTeam project/task/document tools are enabled when `EVA_API_TOKEN` is set.
-
-```bash
-EVA_BASE_URL=https://yourcompany.evateam.ru
-EVA_API_TOKEN=your-token
-# Optional: enables document_attachment_upload for files inside this directory only.
-EVA_UPLOAD_ROOT=/absolute/path/to/uploads
-```
-
-EvaTeam tools use JSON-RPC API methods documented in `docs/eva_api` and
-`docs/eva-api-docs.md`.
+Glossary tools are always available. The project, task, and document tools below appear only when
+`EVA_API_TOKEN` is set.
 
 Project/search tools:
 
@@ -160,3 +224,34 @@ Typical workflows:
    - call `task_comment_add`
    - confirm that the comment was added
 ```
+
+## Development
+
+```bash
+git clone https://github.com/ivan1911/eva-custom-mcp.git
+cd eva-custom-mcp
+npm install
+npm run build
+```
+
+To run a local build from an MCP client, point it at the compiled entry point:
+
+```json
+{
+  "mcpServers": {
+    "eva": {
+      "command": "node",
+      "args": ["/absolute/path/to/eva-custom-mcp/dist/index.js"],
+      "env": {
+        "EVA_BASE_URL": "https://yourcompany.evateam.ru",
+        "EVA_API_TOKEN": "your-token"
+      }
+    }
+  }
+}
+```
+
+Other commands: `npm run dev` (watch mode), `npm run typecheck`, `make publish-dry-run`, and `make publish`
+(needs `NODE_AUTH_TOKEN`).
+
+The server calls EvaTeam JSON-RPC methods; API notes and the OpenAPI spec are in `docs/eva_api`.
