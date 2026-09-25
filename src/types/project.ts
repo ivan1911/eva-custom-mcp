@@ -38,9 +38,18 @@ export interface TaskMutation {
   status?: string | { id: string };
   responsible?: string | { id: string };
   cmf_owner?: string | { id: string };
+  waiting_for?: string | { id: string };
+  lists?: string[];
   priority?: string | { id: string };
   logic_type?: string;
   type?: string;
+  [key: string]: unknown;
+}
+
+export interface EvaList {
+  id: string;
+  code?: string;
+  name?: string;
   [key: string]: unknown;
 }
 

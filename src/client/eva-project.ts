@@ -1,5 +1,5 @@
 import { EvaTeamClient } from "./index.js";
-import type { Project, Sprint, Task, TaskMutation, TaskQuery } from "../types/project.js";
+import type { EvaList, Project, Sprint, Task, TaskMutation, TaskQuery } from "../types/project.js";
 
 export class EvaProjectClient {
   constructor(private client: EvaTeamClient) {}
@@ -22,6 +22,12 @@ export class EvaProjectClient {
 
   async listTasks(query: TaskQuery = {}): Promise<Task[]> {
     return this.client.rpc<Task[]>("CmfTask.list", { kwargs: compactQuery(query) });
+  }
+
+  async countTasks(query: TaskQuery = {}): Promise<number> {
+    return this.client.rpc<number>("CmfTask.count", {
+      kwargs: compactQuery({ filter: query.filter, include_archived: query.include_archived }),
+    });
   }
 
   async getTaskByCode(code: string, fields?: string[]): Promise<Task> {
@@ -63,10 +69,11 @@ export class EvaProjectClient {
     });
   }
 
-  async assignTask(taskRef: string, personRef: string, status?: string): Promise<Task> {
+  async assignTask(taskRef: string, personRef: string, options: { status?: string; waitingFor?: boolean } = {}): Promise<Task> {
     return this.updateTask(taskRef, {
       responsible: { id: personRef },
-      ...(status ? { status } : {}),
+      ...(options.waitingFor ? { waiting_for: { id: personRef } } : {}),
+      ...(options.status ? { status: options.status } : {}),
     });
   }
 
@@ -92,6 +99,24 @@ export class EvaProjectClient {
       args: [templateRef],
       kwargs: { params: { parent: projectCode, ...params } },
     });
+  }
+
+  // Releases (REL-...) and sprints (SPR-...) are both CmfList objects.
+  async listLists(query: TaskQuery = {}): Promise<EvaList[]> {
+    return this.client.rpc<EvaList[]>("CmfList.list", { kwargs: compactQuery(query) });
+  }
+
+  async getListByCode(code: string, fields?: string[]): Promise<EvaList> {
+    const list = await this.client.rpc<EvaList | null>("CmfList.get", {
+      kwargs: compactQuery({ filter: ["code", "==", code], fields }),
+    });
+    if (!list) throw new Error(`Release or sprint not found: ${code}`);
+    return list;
+  }
+
+  // Adds the release to the task's fix versions; releases already set on the task are kept.
+  async addTaskToRelease(taskRef: string, releaseRef: string): Promise<unknown> {
+    return this.client.rpc<unknown>("CmfTask.fix_versions.append", { args: [taskRef, releaseRef] });
   }
 
   async getSprints(boardId: number): Promise<Sprint[]> {

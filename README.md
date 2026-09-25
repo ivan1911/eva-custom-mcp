@@ -117,6 +117,7 @@ All settings are environment variables, passed through the `env` block of the cl
 | --- | --- | --- |
 | `EVA_BASE_URL` | For EvaTeam tools | Your EvaTeam address, for example `https://yourcompany.evateam.ru`. |
 | `EVA_API_TOKEN` | For EvaTeam tools | API token. Enables project, task, and document tools. |
+| `EVA_USER_LOGIN` | No | Your EvaTeam login. Used by `whoami` and `my_tasks` when the current user cannot be detected from the token. |
 | `EVA_UPLOAD_ROOT` | No | Absolute path to a folder. Enables `document_attachment_upload` for files inside this folder only. Uploads are off when unset. |
 | `EVA_GLOSSARY_URL` | No | Site for the glossary tools. Defaults to `https://www.evateam.ru`; the token is never sent there. |
 
@@ -167,10 +168,27 @@ Task tools:
 - `task_transition`: change task status.
 - `task_comment_add`: add a task comment.
 - `task_comments_list`: list task comments.
-- `task_assign`: assign a task to a person reference.
+- `task_assign`: assign a task to a person by login or name; can also set "waiting for answer" and change status.
 - `task_link_create`: create a relation between two tasks.
 - `task_time_log`: log spent time.
 - `task_create_from_template`: create a task from a template.
+
+`task_create`, `task_update`, and `task_assign` accept people as a login, a unique part of a name, or a
+`CmfPerson:<uuid>` reference. `task_create` and `task_update` can also set the reporter (`owner`), and
+`task_create` can put the task into a sprint (`sprintCode`).
+
+People tools:
+
+- `person_search`: find users by part of a name or login.
+- `person_get`: get one user by login, unique part of a name, or reference.
+- `whoami`: the user the API token belongs to.
+- `my_tasks`: open tasks assigned to you, reported by you, or waiting for your answer; also works for another person.
+
+Release tools:
+
+- `release_list`: list releases, optionally by project and name (or sprints with `codePrefix: "SPR-"`).
+- `release_tasks`: tasks in a release with an exact count per status type.
+- `task_add_release`: add a release to a task; releases already set on the task are kept.
 
 Document tools:
 
