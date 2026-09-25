@@ -13,9 +13,11 @@ export class EvaProjectClient {
   }
 
   async getProjectByCode(projectCode: string, fields?: string[]): Promise<Project> {
-    return this.client.rpc<Project>("CmfProject.get", {
+    const project = await this.client.rpc<Project | null>("CmfProject.get", {
       kwargs: compactQuery({ filter: ["code", "==", projectCode], fields }),
     });
+    if (!project) throw new Error(`Project not found: ${projectCode}`);
+    return project;
   }
 
   async listTasks(query: TaskQuery = {}): Promise<Task[]> {

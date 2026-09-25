@@ -89,7 +89,7 @@ const TaskLinkCreateSchema = z.object({
 const TaskTimeLogSchema = z.object({
   taskRef: z.string(),
   timeSpent: z.number().describe("Spent time in minutes"),
-  remainingEstimate: z.number().optional().default(0),
+  remainingEstimate: z.number().optional().describe("Remaining estimate in minutes. Omit to keep the current estimate."),
   text: z.string().optional(),
   date: z.string().optional().describe("ISO date/time. Defaults to now on Eva side if omitted."),
 });

@@ -10,7 +10,8 @@ npm run build
 npm start
 ```
 
-By default the server reads public glossary pages from `https://www.evateam.ru`, so no token is required.
+Glossary tools always read public pages from `https://www.evateam.ru` (override with `EVA_GLOSSARY_URL`),
+without a token, so they keep working when `EVA_BASE_URL` points at your company instance.
 
 ## MCP client config
 
@@ -52,6 +53,8 @@ EvaTeam project/task/document tools are enabled when `EVA_API_TOKEN` is set.
 ```bash
 EVA_BASE_URL=https://yourcompany.evateam.ru
 EVA_API_TOKEN=your-token
+# Optional: enables document_attachment_upload for files inside this directory only.
+EVA_UPLOAD_ROOT=/absolute/path/to/uploads
 ```
 
 EvaTeam tools use JSON-RPC API methods documented in `docs/eva_api` and
@@ -90,7 +93,8 @@ Document tools:
 - `document_tree`: list project documents as a flat tree source.
 - `document_attachments_list`: list attachment metadata.
 - `document_attachment_download`: request/download all document attachments.
-- `document_attachment_upload`: create attachment metadata and upload a local file with multipart POST.
+- `document_attachment_upload`: create attachment metadata and upload a file with multipart POST.
+  Available only when `EVA_UPLOAD_ROOT` is set; files outside that directory (including via symlinks) are rejected.
 
 ## Recommended Agent Prompts
 
