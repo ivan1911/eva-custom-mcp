@@ -21,7 +21,7 @@ export async function createServer() {
   const glossaryClient = new EvaGlossaryClient(new EvaTeamClient(config.glossaryUrl));
 
   const server = new Server(
-    { name: "eva-mcp", version: "0.1.0" },
+    { name: "eva-custom-mcp", version: "0.1.3" },
     { capabilities: { tools: {} } },
   );
 
