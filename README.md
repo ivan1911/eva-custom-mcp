@@ -4,7 +4,7 @@
 
 [Русская версия](https://github.com/ivan1911/eva-custom-mcp/blob/main/README.ru.md)
 
-MCP server that connects AI assistants (Claude Desktop, Claude Code, Cursor, and other MCP clients) to
+MCP server that connects AI assistants (Claude Desktop, Claude Code, Codex, Cursor, and other MCP clients) to
 [EvaTeam](https://evateam.ru): search and edit tasks, work with wiki documents, and read the public EvaTeam glossary.
 
 ## Requirements
@@ -62,6 +62,31 @@ claude mcp add --transport stdio --scope user \
 ```
 
 Check the connection with `claude mcp list` or `/mcp` inside Claude Code.
+
+### Codex
+
+```bash
+codex mcp add eva \
+  --env EVA_BASE_URL=https://yourcompany.evateam.ru \
+  --env EVA_API_TOKEN=your-token \
+  -- npx -y eva-custom-mcp
+```
+
+Or add it by hand to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.eva]
+command = "npx"
+args = ["-y", "eva-custom-mcp"]
+startup_timeout_sec = 30
+
+[mcp_servers.eva.env]
+EVA_BASE_URL = "https://yourcompany.evateam.ru"
+EVA_API_TOKEN = "your-token"
+```
+
+`startup_timeout_sec` is optional. It gives the first `npx` run time to download the package, which can
+otherwise exceed the default startup timeout. Check the connection with `codex mcp list` or `/mcp` inside Codex.
 
 ### Cursor and other MCP clients
 
