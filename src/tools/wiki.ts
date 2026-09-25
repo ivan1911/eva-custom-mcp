@@ -73,12 +73,12 @@ const DocumentTreeSchema = z.object({
 
 const AttachmentUploadSchema = z.object({
   parentRef: z.string().describe("Document/task object reference or code that will own the attachment"),
-  filePath: z.string().describe("Local file path to upload"),
+  filePath: z.string().describe("Path of the file to upload, relative to EVA_UPLOAD_ROOT or absolute inside it"),
   name: z.string().optional().describe("Attachment name. Defaults to file basename."),
 });
 
 export function registerWikiTools(client: EvaWikiClient): ToolDefinition[] {
-  return [
+  const tools: ToolDefinition[] = [
     {
       definition: {
         name: "document_search",
@@ -199,18 +199,24 @@ export function registerWikiTools(client: EvaWikiClient): ToolDefinition[] {
         return json(await client.downloadAllAttachments(documentRef));
       },
     },
-    {
+  ];
+
+  if (client.canUploadFiles) {
+    tools.push({
       definition: {
         name: "document_attachment_upload",
-        description: "Upload a local file as an EvaTeam attachment: CmfAttachment.create, CmfAttachment.get(url), multipart POST",
+        description:
+          "Upload a file from EVA_UPLOAD_ROOT as an EvaTeam attachment: CmfAttachment.create, CmfAttachment.get(url), multipart POST",
         inputSchema: zodToJsonSchema(AttachmentUploadSchema) as never,
       },
       handler: async (args) => {
         const { parentRef, filePath, name } = AttachmentUploadSchema.parse(args);
         return json(await client.uploadAttachmentFile(parentRef, filePath, name));
       },
-    },
-  ];
+    });
+  }
+
+  return tools;
 }
 
 function toApiQuery(input: z.infer<typeof QuerySchema>): EvaApiQuery {

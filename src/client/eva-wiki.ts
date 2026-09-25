@@ -1,10 +1,17 @@
-import { basename } from "node:path";
-import { readFile } from "node:fs/promises";
+import { basename, isAbsolute, relative, resolve, sep } from "node:path";
+import { readFile, realpath, stat } from "node:fs/promises";
 import { EvaTeamClient } from "./index.js";
 import type { EvaApiQuery, WikiAttachment, WikiDocument, WikiDocumentMutation } from "../types/wiki.js";
 
 export class EvaWikiClient {
-  constructor(private client: EvaTeamClient) {}
+  constructor(
+    private client: EvaTeamClient,
+    private uploadRoot?: string,
+  ) {}
+
+  get canUploadFiles(): boolean {
+    return Boolean(this.uploadRoot);
+  }
 
   async listPages(query: EvaApiQuery = {}): Promise<WikiDocument[]> {
     return this.client.rpc<WikiDocument[]>("CmfDocument.list", { kwargs: compactQuery(query) });
@@ -93,7 +100,9 @@ export class EvaWikiClient {
   }
 
   async uploadAttachmentFile(parentRef: string, filePath: string, name?: string): Promise<unknown> {
-    const attachment = await this.createAttachment(name ?? basename(filePath), parentRef);
+    const localPath = await this.resolveUploadPath(filePath);
+    const attachmentName = name ?? basename(localPath);
+    const attachment = await this.createAttachment(attachmentName, parentRef);
     const attachmentRef = String(attachment.id ?? attachment);
     const attachmentWithUrl = await this.client.rpc<WikiAttachment>("CmfAttachment.get", {
       kwargs: compactQuery({ filter: ["id", "==", attachmentRef], fields: ["url"] }),
@@ -102,12 +111,37 @@ export class EvaWikiClient {
       throw new Error("CmfAttachment.get did not return an upload url");
     }
 
-    const data = await readFile(filePath);
+    const data = await readFile(localPath);
     const form = new FormData();
-    form.append("file", new Blob([data]), name ?? basename(filePath));
+    form.append("file", new Blob([data]), attachmentName);
     const uploadResult = await this.client.postForm(attachmentWithUrl.url, form);
 
     return { attachment, uploadUrl: this.client.resolveUrl(attachmentWithUrl.url), uploadResult };
+  }
+
+  // Only files inside EVA_UPLOAD_ROOT may be uploaded; symlinks are resolved so they cannot point outside it.
+  private async resolveUploadPath(filePath: string): Promise<string> {
+    if (!this.uploadRoot) {
+      throw new Error("File uploads are disabled. Set EVA_UPLOAD_ROOT to a directory to allow uploads from it.");
+    }
+
+    const root = await realpath(this.uploadRoot);
+    let target: string;
+    try {
+      target = await realpath(resolve(root, filePath));
+    } catch {
+      throw new Error(`File not found: ${filePath}`);
+    }
+
+    const pathFromRoot = relative(root, target);
+    if (pathFromRoot === "" || pathFromRoot === ".." || pathFromRoot.startsWith(`..${sep}`) || isAbsolute(pathFromRoot)) {
+      throw new Error(`File must be inside EVA_UPLOAD_ROOT (${root}): ${filePath}`);
+    }
+    if (!(await stat(target)).isFile()) {
+      throw new Error(`Not a regular file: ${filePath}`);
+    }
+
+    return target;
   }
 }
 

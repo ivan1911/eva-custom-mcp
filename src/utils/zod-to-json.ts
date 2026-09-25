@@ -37,8 +37,14 @@ export function zodToJsonSchema(schema: z.ZodType): Record<string, unknown> {
     return withDescription({ type: "object", additionalProperties: zodToJsonSchema(schema.valueSchema) });
   }
   if (schema instanceof z.ZodUnknown || schema instanceof z.ZodAny) return withDescription({});
-  if (schema instanceof z.ZodOptional) return zodToJsonSchema(schema.unwrap());
-  if (schema instanceof z.ZodDefault) return zodToJsonSchema(schema.removeDefault() as z.ZodType);
+  // Wrappers keep their own description (e.g. `.optional().describe(...)`) on top of the inner schema.
+  if (schema instanceof z.ZodOptional) return withDescription(zodToJsonSchema(schema.unwrap()));
+  if (schema instanceof z.ZodDefault) {
+    return withDescription({
+      ...zodToJsonSchema(schema.removeDefault() as z.ZodType),
+      default: schema._def.defaultValue(),
+    });
+  }
 
   return withDescription({ type: "string" });
 }
