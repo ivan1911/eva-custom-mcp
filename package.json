@@ -3,6 +3,10 @@
   "version": "0.1.4",
   "description": "Custom MCP server for EvaTeam glossary, project, and wiki APIs",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan1911/eva-custom-mcp.git"
+  },
   "type": "module",
   "bin": {
     "eva-custom-mcp": "dist/index.js"
