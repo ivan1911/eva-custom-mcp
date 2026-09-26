@@ -57,7 +57,11 @@ test("task_assign schema advertises both accepted parameters", () => {
   assert.ok(schema.properties?.person);
   assert.ok(schema.properties?.personRef);
   assert.ok(!schema.required?.includes("person"));
-  assert.deepEqual(schema.anyOf, [{ required: ["person"] }, { required: ["personRef"] }]);
+  assert.ok(!schema.required?.includes("personRef"));
+  assert.ok(schema.required?.includes("taskRef"));
+  for (const keyword of ["anyOf", "oneOf", "allOf"]) {
+    assert.equal(Object.hasOwn(schema, keyword), false, `Unsupported root keyword: ${keyword}`);
+  }
 });
 
 test("current user requires a configured login without making an RPC", async () => {
