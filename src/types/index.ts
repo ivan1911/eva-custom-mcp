@@ -9,5 +9,6 @@ export interface EvaWikiConfig {
 }
 
 export type { GlossaryArticle } from "./glossary.js";
-export type { Project, Issue, Sprint } from "./project.js";
+export type { EvaList, Project, Issue, Sprint } from "./project.js";
+export type { Person } from "./person.js";
 export type { EvaApiFilter, EvaApiQuery, EvaApiSlice, WikiAttachment, WikiDocument, WikiDocumentMutation } from "./wiki.js";

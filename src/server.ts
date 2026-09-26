@@ -7,11 +7,14 @@ import {
 import { ZodError } from "zod";
 import { EvaGlossaryClient } from "./client/glossary.js";
 import { EvaTeamClient } from "./client/index.js";
+import { EvaPersonClient } from "./client/eva-person.js";
 import { EvaProjectClient } from "./client/eva-project.js";
 import { EvaWikiClient } from "./client/eva-wiki.js";
 import { loadConfig } from "./config.js";
 import { registerGlossaryTools } from "./tools/glossary.js";
+import { registerPeopleTools } from "./tools/people.js";
 import { registerProjectTools } from "./tools/project.js";
+import { registerReleaseTools } from "./tools/release.js";
 import { registerWikiTools } from "./tools/wiki.js";
 
 export async function createServer() {
@@ -29,8 +32,14 @@ export async function createServer() {
 
   if (config.apiToken) {
     const projectClient = new EvaProjectClient(client);
+    const personClient = new EvaPersonClient(client, config.userLogin);
     const wikiClient = new EvaWikiClient(client, config.uploadRoot);
-    tools.push(...registerProjectTools(projectClient, wikiClient), ...registerWikiTools(wikiClient));
+    tools.push(
+      ...registerProjectTools(projectClient, personClient, wikiClient),
+      ...registerPeopleTools(personClient, projectClient),
+      ...registerReleaseTools(projectClient),
+      ...registerWikiTools(wikiClient),
+    );
   }
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({

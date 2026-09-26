@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zodToJsonSchema } from "../utils/zod-to-json.js";
+import type { EvaPersonClient } from "../client/eva-person.js";
 import type { EvaProjectClient } from "../client/eva-project.js";
 import type { TaskQuery } from "../types/project.js";
 import type { EvaWikiClient } from "../client/eva-wiki.js";
@@ -9,6 +10,7 @@ const FilterSchema = z.array(z.unknown()).describe('EvaTeam BQL filter, for exam
 const FieldsSchema = z.array(z.string()).describe('Fields to return. Use ["*"], ["**"], ["***"], or explicit fields.');
 const SliceSchema = z.tuple([z.number(), z.number()]).describe("Result slice, for example [0, 20]");
 const OrderBySchema = z.array(z.string()).describe('Sort fields, for example ["-cmf_created_at"]');
+const PersonSchema = z.string().describe("Person login, unique part of a name, or CmfPerson:<uuid>");
 
 const QuerySchema = z.object({
   filter: FilterSchema.optional(),
@@ -41,9 +43,11 @@ const TaskCreateSchema = z.object({
   projectCode: z.string().optional().describe("Project code used as parent"),
   name: z.string().describe("Task title"),
   text: z.string().optional().describe("Task description/body"),
-  responsible: z.string().optional(),
+  responsible: PersonSchema.optional().describe("Assignee: login, unique part of a name, or CmfPerson:<uuid>"),
+  owner: PersonSchema.optional().describe("Reporter (cmf_owner): login, unique part of a name, or CmfPerson:<uuid>"),
   status: z.string().optional(),
   logicType: z.string().optional().describe("Eva task logic_type"),
+  sprintCode: z.string().optional().describe("Sprint code to put the task into, for example SPR-000006"),
   extra: z.record(z.unknown()).optional().describe("Additional CmfTask.create kwargs"),
 });
 
@@ -51,13 +55,10 @@ const TaskUpdateSchema = z.object({
   taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
   name: z.string().optional(),
   text: z.string().optional(),
-  responsible: z.string().optional(),
+  responsible: PersonSchema.optional().describe("Assignee: login, unique part of a name, or CmfPerson:<uuid>"),
+  owner: PersonSchema.optional().describe("Reporter (cmf_owner): login, unique part of a name, or CmfPerson:<uuid>"),
   status: z.string().optional(),
   extra: z.record(z.unknown()).optional().describe("Additional CmfTask.update kwargs"),
-});
-
-const TaskDeleteSchema = z.object({
-  taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
 });
 
 const TaskTransitionSchema = z.object({
@@ -75,9 +76,11 @@ const TaskCommentsListSchema = z.object({
 });
 
 const TaskAssignSchema = z.object({
-  taskRef: z.string(),
-  personRef: z.string().describe("Person object reference, for example CmfPerson:<uuid>"),
-  status: z.string().optional(),
+  taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
+  person: PersonSchema.trim().min(1).optional(),
+  personRef: PersonSchema.trim().min(1).optional().describe("Deprecated alias for person; use person in new calls"),
+  waitingFor: z.boolean().optional().describe('Also set "waiting for answer" (waiting_for) to this person'),
+  status: z.string().optional().describe("Status code to switch to at the same time, for example STC-000002"),
 });
 
 const TaskLinkCreateSchema = z.object({
@@ -108,7 +111,13 @@ const ProjectFindEverythingSchema = z.object({
   documentFields: FieldsSchema.optional(),
 });
 
-export function registerProjectTools(projectClient: EvaProjectClient, wikiClient?: EvaWikiClient): ToolDefinition[] {
+export function registerProjectTools(
+  projectClient: EvaProjectClient,
+  personClient: EvaPersonClient,
+  wikiClient?: EvaWikiClient,
+): ToolDefinition[] {
+  const personRef = (person?: string) => (person ? personClient.resolveRef(person) : Promise.resolve(undefined));
+
   return [
     {
       definition: {
@@ -169,9 +178,11 @@ export function registerProjectTools(projectClient: EvaProjectClient, wikiClient
             name: input.name,
             text: input.text,
             parent: input.projectCode,
-            responsible: input.responsible,
+            responsible: await personRef(input.responsible),
+            cmf_owner: await personRef(input.owner),
             status: input.status,
             logic_type: input.logicType,
+            lists: input.sprintCode ? [input.sprintCode] : undefined,
             ...(input.extra ?? {}),
           }),
         );
@@ -184,29 +195,17 @@ export function registerProjectTools(projectClient: EvaProjectClient, wikiClient
         inputSchema: zodToJsonSchema(TaskUpdateSchema) as never,
       },
       handler: async (args) => {
-        const { taskRef, logicType: _logicType, ...input } = TaskUpdateSchema.parse(args) as z.infer<typeof TaskUpdateSchema> & {
-          logicType?: string;
-        };
+        const { taskRef, ...input } = TaskUpdateSchema.parse(args);
         return json(
           await projectClient.updateTask(taskRef, {
             name: input.name,
             text: input.text,
-            responsible: input.responsible,
+            responsible: await personRef(input.responsible),
+            cmf_owner: await personRef(input.owner),
             status: input.status,
             ...(input.extra ?? {}),
           }),
         );
-      },
-    },
-    {
-      definition: {
-        name: "task_delete",
-        description: "Delete an EvaTeam task via CmfTask.delete",
-        inputSchema: zodToJsonSchema(TaskDeleteSchema) as never,
-      },
-      handler: async (args) => {
-        const { taskRef } = TaskDeleteSchema.parse(args);
-        return json(await projectClient.deleteTask(taskRef));
       },
     },
     {
@@ -245,12 +244,19 @@ export function registerProjectTools(projectClient: EvaProjectClient, wikiClient
     {
       definition: {
         name: "task_assign",
-        description: "Assign an EvaTeam task to a person reference",
-        inputSchema: zodToJsonSchema(TaskAssignSchema) as never,
+        description: "Assign an EvaTeam task to a person by login, name, or reference; optionally set waiting-for and status",
+        inputSchema: {
+          ...zodToJsonSchema(TaskAssignSchema),
+          anyOf: [{ required: ["person"] }, { required: ["personRef"] }],
+        } as never,
       },
       handler: async (args) => {
-        const { taskRef, personRef, status } = TaskAssignSchema.parse(args);
-        return json(await projectClient.assignTask(taskRef, personRef, status));
+        const { taskRef, person, personRef, waitingFor, status } = TaskAssignSchema.parse(args);
+        if (person && personRef && person !== personRef) throw new Error("person and personRef must match when both are provided");
+        const target = person ?? personRef;
+        if (!target) throw new Error("Either person or personRef is required");
+        const { id } = await personClient.resolveRef(target);
+        return json(await projectClient.assignTask(taskRef, id, { status, waitingFor }));
       },
     },
     {

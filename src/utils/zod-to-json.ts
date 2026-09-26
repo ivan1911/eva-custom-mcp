@@ -26,8 +26,11 @@ export function zodToJsonSchema(schema: z.ZodType): Record<string, unknown> {
   }
 
   if (schema instanceof z.ZodString) return withDescription({ type: "string" });
-  if (schema instanceof z.ZodNumber) return withDescription({ type: "number" });
+  if (schema instanceof z.ZodNumber) {
+    return withDescription({ type: schema.isInt ? "integer" : "number" });
+  }
   if (schema instanceof z.ZodBoolean) return withDescription({ type: "boolean" });
+  if (schema instanceof z.ZodEnum) return withDescription({ type: "string", enum: schema.options });
   if (schema instanceof z.ZodArray) return withDescription({ type: "array", items: zodToJsonSchema(schema.element) });
   if (schema instanceof z.ZodTuple) {
     const items = schema.items.map((item: z.ZodType) => zodToJsonSchema(item));
