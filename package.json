@@ -1,6 +1,6 @@
 {
   "name": "eva-custom-mcp",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Custom MCP server for EvaTeam glossary, project, and wiki APIs",
   "private": false,
   "repository": {
