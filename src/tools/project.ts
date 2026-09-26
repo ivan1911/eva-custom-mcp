@@ -244,11 +244,8 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_assign",
-        description: "Assign an EvaTeam task to a person by login, name, or reference; optionally set waiting-for and status",
-        inputSchema: {
-          ...zodToJsonSchema(TaskAssignSchema),
-          anyOf: [{ required: ["person"] }, { required: ["personRef"] }],
-        } as never,
+        description: "Assign an EvaTeam task to a person by login, name, or reference; provide person or the deprecated personRef alias (at least one is required, and both must match if provided); optionally set waiting-for and status",
+        inputSchema: zodToJsonSchema(TaskAssignSchema) as never,
       },
       handler: async (args) => {
         const { taskRef, person, personRef, waitingFor, status } = TaskAssignSchema.parse(args);
