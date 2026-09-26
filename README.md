@@ -117,7 +117,7 @@ All settings are environment variables, passed through the `env` block of the cl
 | --- | --- | --- |
 | `EVA_BASE_URL` | For EvaTeam tools | Your EvaTeam address, for example `https://yourcompany.evateam.ru`. |
 | `EVA_API_TOKEN` | For EvaTeam tools | API token. Enables project, task, and document tools. |
-| `EVA_USER_LOGIN` | No | Your EvaTeam login. Used by `whoami` and `my_tasks` when the current user cannot be detected from the token. |
+| `EVA_USER_LOGIN` | For `whoami` and `my_tasks` without `person` | EvaTeam login of the default user. Other tools work without it; token ownership is not verified. |
 | `EVA_UPLOAD_ROOT` | No | Absolute path to a folder. Enables `document_attachment_upload` for files inside this folder only. Uploads are off when unset. |
 | `EVA_GLOSSARY_URL` | No | Site for the glossary tools. Defaults to `https://www.evateam.ru`; the token is never sent there. |
 
@@ -164,7 +164,6 @@ Task tools:
 - `task_get`: get a task by code or object reference.
 - `task_create`: create a task.
 - `task_update`: update a task.
-- `task_delete`: delete a task.
 - `task_transition`: change task status.
 - `task_comment_add`: add a task comment.
 - `task_comments_list`: list task comments.
@@ -181,8 +180,8 @@ People tools:
 
 - `person_search`: find users by part of a name or login.
 - `person_get`: get one user by login, unique part of a name, or reference.
-- `whoami`: the user the API token belongs to.
-- `my_tasks`: open tasks assigned to you, reported by you, or waiting for your answer; also works for another person.
+- `whoami`: the user configured by `EVA_USER_LOGIN`, which need not be the token owner.
+- `my_tasks`: open tasks assigned to, reported by, or waiting for the configured user; also works for an explicit `person` without `EVA_USER_LOGIN`. Returns `hasMore` when more tasks exist beyond `limit`.
 
 Release tools:
 

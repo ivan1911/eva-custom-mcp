@@ -70,25 +70,12 @@ export class EvaPersonClient {
   async getCurrentUser(): Promise<Person> {
     if (this.currentUser) return this.currentUser;
 
-    if (this.userLogin) {
-      const person = await this.getByLogin(this.userLogin);
-      if (!person) throw new Error(`EVA_USER_LOGIN user not found: ${this.userLogin}`);
-      this.currentUser = person;
-      return person;
-    }
+    const login = this.userLogin?.trim();
+    if (!login) throw new Error("Set EVA_USER_LOGIN to your EvaTeam login to use whoami or my_tasks without person.");
 
-    let person: Person | null = null;
-    try {
-      person = await this.client.rpc<Person | null>("CmfPerson.public_get_current_user");
-    } catch (error) {
-      const reason = error instanceof Error ? error.message : String(error);
-      throw new Error(`Could not determine the current user (${reason}). Set EVA_USER_LOGIN to your EvaTeam login.`);
-    }
-    if (!person?.id) {
-      throw new Error("Could not determine the current user. Set EVA_USER_LOGIN to your EvaTeam login.");
-    }
-
-    this.currentUser = { id: person.id, code: person.code, name: person.name, login: person.login };
+    const person = await this.getByLogin(login);
+    if (!person?.id) throw new Error(`EVA_USER_LOGIN user not found: ${login}`);
+    this.currentUser = person;
     return this.currentUser;
   }
 }

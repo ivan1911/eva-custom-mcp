@@ -1,6 +1,6 @@
 # Люди, «мои задачи» и релизы
 
-Статус: в разработке, ветка `claude/keen-euler-8znxg0`. Проверено только против мок-сервера; на живом EvaTeam не запускалось.
+Статус: в разработке, ветка `feature/people-releases`. Поиск людей, задачи с `EVA_USER_LOGIN` и чтение релизов проверены на живом EvaTeam; операции записи ещё не проверены live.
 
 ## Зачем
 
@@ -18,7 +18,7 @@
 | --- | --- | --- |
 | `person_search` | Поиск по части имени или логина, без системных пользователей | `CmfPerson.list`, фильтр `name`/`login` `ILIKE` и `system == false` |
 | `person_get` | Один пользователь по логину, уникальной части имени или ссылке | `CmfPerson.get` по `login` или по ссылке |
-| `whoami` | Пользователь, которому принадлежит токен | `CmfPerson.public_get_current_user`; при заданной `EVA_USER_LOGIN` — `CmfPerson.get` по этому логину |
+| `whoami` | Пользователь из `EVA_USER_LOGIN`; принадлежность токена не проверяется | `CmfPerson.get` по настроенному логину |
 
 Как определяется человек (везде, где передаётся `person`, `responsible` или `owner`):
 
@@ -33,6 +33,8 @@
 - `role`: `responsible` — исполнитель (по умолчанию), `owner` — постановщик (`cmf_owner`), `waiting` — «Ждём ответа» (`waiting_for`);
 - `statusType`: `OPEN`, `IN_PROGRESS`, `IN_REVIEW` или `CLOSED`; по умолчанию все, кроме `CLOSED`;
 - `projectCode`, `limit`, `fields`.
+
+Ответ содержит не более `limit` задач и `hasMore`: для проверки наличия продолжения запрашивается одна дополнительная задача.
 
 Вызов: `CmfTask.list` с фильтром вида `[['responsible', '==', personId], ['cache_status_type', '!=', 'CLOSED']]`, сортировка по `-cmf_modified_at`.
 
@@ -50,14 +52,14 @@
 
 - `task_create`, `task_update`: исполнитель (`responsible`) принимается как логин или имя; новый параметр `owner` — постановщик (`cmf_owner`). Люди передаются в API как `{ id }`.
 - `task_create`: новый параметр `sprintCode` — кладёт задачу в спринт через `lists: ['SPR-…']`.
-- `task_assign`: параметр `personRef` переименован в `person` и принимает логин, имя или ссылку. Новый параметр `waitingFor` одновременно ставит «Ждём ответа» на того же человека; `status` меняет статус тем же вызовом.
+- `task_assign`: параметр `person` принимает логин, имя или ссылку; старый `personRef` поддерживается как deprecated-алиас. Если переданы оба параметра, их значения должны совпадать. Новый параметр `waitingFor` одновременно ставит «Ждём ответа» на того же человека; `status` меняет статус тем же вызовом.
 - Генерация JSON Schema: поддержаны `enum` и целочисленные параметры.
 
-**Несовместимость:** клиенты, которые передавали в `task_assign` параметр `personRef`, должны перейти на `person`.
+**Совместимость:** существующие вызовы `task_assign` с `personRef` продолжают работать; в новых вызовах используйте `person`.
 
 ## Новая настройка
 
-`EVA_USER_LOGIN` (необязательно) — логин пользователя для `whoami` и `my_tasks`, если текущего пользователя не удаётся определить по токену.
+`EVA_USER_LOGIN` — логин пользователя для `whoami` и `my_tasks` без явного `person`. Остальные инструменты и `my_tasks` с `person` работают без этой настройки. Логин не обязательно принадлежит владельцу токена; права доступа по-прежнему определяются токеном.
 
 ## Откуда взяты вызовы
 
@@ -72,11 +74,11 @@
 | Задачи релиза через `fix_versions IN [id]` с `include_archived` | Пример KB-000269 |
 | `CmfTask.fix_versions.append(taskId, releaseId)` | Спецификация OpenAPI 1.9.22, пример KB-000353 |
 | `CmfList` для спринтов и релизов | Спецификация OpenAPI 1.9.22 (`CmfList.create` с примером «Спринт 1»), коды `REL-` в примерах |
-| `CmfPerson.public_get_current_user` | Только сетевые запросы сайта docs.evateam.ru; в спецификации метода нет |
+| `CmfPerson.public_get_current_user` | На живом `/api/` возвращает `-32601 Method not found`; вызов удалён |
 
 ## Что проверить на живом EvaTeam
 
-- [ ] `whoami` без `EVA_USER_LOGIN`: работает ли `CmfPerson.public_get_current_user` через `/api/` с токеном и возвращает ли `login`.
+- [x] `CmfPerson.public_get_current_user` через `/api/` не поддерживается. `whoami` работает через `EVA_USER_LOGIN`; без логина возвращает ошибку настройки без RPC.
 - [ ] `person_search`: поддерживает ли `CmfPerson.list` фильтр `ILIKE` по `name` и `login` в составе `OR`.
 - [ ] `my_tasks`: работают ли фильтры `['responsible', '==', id]`, `['cmf_owner', '==', id]`, `['waiting_for', '==', id]`.
 - [ ] `my_tasks`: возвращаются ли поля `status.name`, `responsible.name`, `parent.name` в формате `fields`.

@@ -54,10 +54,6 @@ export class EvaProjectClient {
     });
   }
 
-  async deleteTask(taskRef: string): Promise<unknown> {
-    return this.client.rpc<unknown>("CmfTask.delete", { args: [taskRef] });
-  }
-
   async getTaskComments(code: string): Promise<unknown[]> {
     const task = await this.getTaskByCode(code, ["comments.*"]);
     return task.comments ?? [];

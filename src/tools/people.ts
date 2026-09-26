@@ -25,7 +25,7 @@ const MyTasksSchema = z.object({
     .optional()
     .default("responsible")
     .describe('"responsible": assigned to the person; "owner": reported by the person; "waiting": waiting for the person\'s answer'),
-  person: PersonSchema.optional().describe("Whose tasks to list. Defaults to the current user."),
+  person: PersonSchema.optional().describe("Whose tasks to list. Defaults to the user configured by EVA_USER_LOGIN."),
   statusType: StatusTypeSchema.optional().describe("Only tasks with this status type. Defaults to all tasks that are not CLOSED."),
   projectCode: z.string().optional().describe("Only tasks from this project"),
   limit: z.number().int().positive().max(200).optional().default(50),
@@ -67,7 +67,7 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
     {
       definition: {
         name: "whoami",
-        description: "Get the EvaTeam user the API token belongs to (or EVA_USER_LOGIN when set)",
+        description: "Get the EvaTeam user configured by EVA_USER_LOGIN; this does not verify who owns the API token",
         inputSchema: zodToJsonSchema(z.object({})) as never,
       },
       handler: async () => json(await personClient.getCurrentUser()),
@@ -76,7 +76,7 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
       definition: {
         name: "my_tasks",
         description:
-          "List open tasks of the current user (or another person): assigned to them, reported by them, or waiting for their answer",
+          "List open tasks of the user configured by EVA_USER_LOGIN (or an explicit person); hasMore indicates that the list was limited",
         inputSchema: zodToJsonSchema(MyTasksSchema) as never,
       },
       handler: async (args) => {
@@ -95,10 +95,10 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
         const tasks = await projectClient.listTasks({
           filter,
           fields: input.fields ?? DEFAULT_TASK_FIELDS,
-          slice: [0, input.limit],
+          slice: [0, input.limit + 1],
           order_by: ["-cmf_modified_at"],
         });
-        return json({ person: personSummary(person), role: input.role, tasks });
+        return json({ person: personSummary(person), role: input.role, tasks: tasks.slice(0, input.limit), hasMore: tasks.length > input.limit });
       },
     },
   ];

@@ -61,10 +61,6 @@ const TaskUpdateSchema = z.object({
   extra: z.record(z.unknown()).optional().describe("Additional CmfTask.update kwargs"),
 });
 
-const TaskDeleteSchema = z.object({
-  taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
-});
-
 const TaskTransitionSchema = z.object({
   taskRef: z.string(),
   status: z.string().describe("Target status code or reference"),
@@ -81,7 +77,8 @@ const TaskCommentsListSchema = z.object({
 
 const TaskAssignSchema = z.object({
   taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
-  person: PersonSchema,
+  person: PersonSchema.trim().min(1).optional(),
+  personRef: PersonSchema.trim().min(1).optional().describe("Deprecated alias for person; use person in new calls"),
   waitingFor: z.boolean().optional().describe('Also set "waiting for answer" (waiting_for) to this person'),
   status: z.string().optional().describe("Status code to switch to at the same time, for example STC-000002"),
 });
@@ -213,17 +210,6 @@ export function registerProjectTools(
     },
     {
       definition: {
-        name: "task_delete",
-        description: "Delete an EvaTeam task via CmfTask.delete",
-        inputSchema: zodToJsonSchema(TaskDeleteSchema) as never,
-      },
-      handler: async (args) => {
-        const { taskRef } = TaskDeleteSchema.parse(args);
-        return json(await projectClient.deleteTask(taskRef));
-      },
-    },
-    {
-      definition: {
         name: "task_transition",
         description: "Change an EvaTeam task status via CmfTask.update",
         inputSchema: zodToJsonSchema(TaskTransitionSchema) as never,
@@ -259,11 +245,17 @@ export function registerProjectTools(
       definition: {
         name: "task_assign",
         description: "Assign an EvaTeam task to a person by login, name, or reference; optionally set waiting-for and status",
-        inputSchema: zodToJsonSchema(TaskAssignSchema) as never,
+        inputSchema: {
+          ...zodToJsonSchema(TaskAssignSchema),
+          anyOf: [{ required: ["person"] }, { required: ["personRef"] }],
+        } as never,
       },
       handler: async (args) => {
-        const { taskRef, person, waitingFor, status } = TaskAssignSchema.parse(args);
-        const { id } = await personClient.resolveRef(person);
+        const { taskRef, person, personRef, waitingFor, status } = TaskAssignSchema.parse(args);
+        if (person && personRef && person !== personRef) throw new Error("person and personRef must match when both are provided");
+        const target = person ?? personRef;
+        if (!target) throw new Error("Either person or personRef is required");
+        const { id } = await personClient.resolveRef(target);
         return json(await projectClient.assignTask(taskRef, id, { status, waitingFor }));
       },
     },
