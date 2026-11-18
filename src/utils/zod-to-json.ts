@@ -22,12 +22,27 @@ export function zodToJsonSchema(schema: z.ZodType): Record<string, unknown> {
       type: "object",
       properties,
       ...(required.length > 0 ? { required } : {}),
+      ...(schema._def.unknownKeys === "strict" ? { additionalProperties: false } : {}),
     });
   }
 
-  if (schema instanceof z.ZodString) return withDescription({ type: "string" });
+  if (schema instanceof z.ZodString) return withDescription({
+    type: "string",
+    ...(schema.minLength !== null ? { minLength: schema.minLength } : {}),
+    ...(schema.maxLength !== null ? { maxLength: schema.maxLength } : {}),
+  });
   if (schema instanceof z.ZodNumber) {
-    return withDescription({ type: schema.isInt ? "integer" : "number" });
+    const bounds: Record<string, number> = {};
+    for (const check of schema._def.checks) {
+      if (check.kind === "min") {
+        const key = check.inclusive ? "minimum" : "exclusiveMinimum";
+        bounds[key] = Math.max(bounds[key] ?? -Infinity, check.value);
+      } else if (check.kind === "max") {
+        const key = check.inclusive ? "maximum" : "exclusiveMaximum";
+        bounds[key] = Math.min(bounds[key] ?? Infinity, check.value);
+      }
+    }
+    return withDescription({ type: schema.isInt ? "integer" : "number", ...bounds });
   }
   if (schema instanceof z.ZodBoolean) return withDescription({ type: "boolean" });
   if (schema instanceof z.ZodEnum) return withDescription({ type: "string", enum: schema.options });

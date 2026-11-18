@@ -121,6 +121,8 @@ All settings are environment variables, passed through the `env` block of the cl
 | `EVA_UPLOAD_ROOT` | No | Absolute path to a folder. Enables `document_attachment_upload` for files inside this folder only. Uploads are off when unset. |
 | `EVA_GLOSSARY_URL` | No | Site for the glossary tools. Defaults to `https://www.evateam.ru`; the token is never sent there. |
 
+`EVA_USER_LOGIN` must exactly match the EvaTeam user's `login` field. If the login is not found, locate the user with `person_search`, configure the returned login, and restart the MCP server. Until then, pass the selected `id` or `login` as `person` to `my_tasks`.
+
 ## Checking that it works
 
 After restarting the client, ask the assistant something like *"Show my EvaTeam projects"*.
@@ -211,7 +213,9 @@ Document tools:
 ```text
 Use EVA MCP as the source of truth for project tasks and wiki documents.
 Prefer compact high-level tools: `project_find_everything`, `task_search`, `task_get`, `task_create`, `task_update`, `task_comment_add`, `task_time_log`, `document_search`, `document_get`, `document_create`, `document_update_text`, `document_publish`.
-Always resolve project codes with `project_get_by_code`.
+For a known task code, call `task_get` directly with `code`, for example {"code":"OPS-1994"}.
+For "my tasks", call `my_tasks` with {} directly. No preliminary `whoami` or person search is needed.
+Use `project_get_by_code` when project details are needed; `task_get` and `my_tasks` do not need it first.
 Before mutating an object, fetch it first and summarize the intended change.
 Never delete or publish without explicit user confirmation.
 Return EVA object codes in user-facing responses.
@@ -223,11 +227,13 @@ Return EVA object codes in user-facing responses.
 You work with EvaTeam through the `eva-custom-mcp` MCP server.
 
 Main rules:
-- Always start with `project_get_by_code` when the user provides a project code.
+- Use `project_get_by_code` for project details; it is not a prerequisite for `task_get` or `my_tasks`.
 - Use `project_find_everything` for broad project searches.
 - For tasks:
   - use `task_search` to find tasks;
-  - use `task_get` when a task code is known;
+  - use `task_get` with `code` when a task code is known; `taskRef` is an alternative for a CmfTask:<uuid> reference; there is no `task` parameter;
+  - use `my_tasks` with {} for my assigned non-closed tasks, without a preliminary `whoami` or person search;
+  - request roles `owner` or `waiting` when reported tasks or tasks waiting for an answer are needed;
   - use `task_create` to create tasks;
   - use `task_update` to change task fields, status, or assignee;
   - use `task_comment_add` to add comments;
@@ -241,6 +247,9 @@ Main rules:
 - Do not delete tasks or documents without explicit user confirmation.
 - Do not publish documents without explicit user confirmation.
 - Before changing a task or document, fetch the current object first with `task_get` or `document_get`.
+- Reuse returned data. Repeat a read when extra fields or fresh data are needed; `task_get` includes the readable status by default.
+- Increase `my_tasks` limit only if `hasMore` is true and more tasks are needed, up to 200. A new request returns the selection from the beginning.
+- For an `EVA_USER_LOGIN` error, follow its recovery guidance instead of retrying unchanged.
 - If the API returns multiple similar results, ask the user which object is intended.
 - In user-facing responses, include EVA object codes such as `ABC-000123` for tasks and `DOC-000123` for documents.
 - Never reveal API tokens and do not ask the user to paste tokens into chat.

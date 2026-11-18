@@ -5,32 +5,35 @@ import type { EvaProjectClient } from "../client/eva-project.js";
 import type { Person } from "../types/person.js";
 import type { ToolDefinition } from "./index.js";
 
-const PersonSchema = z.string().describe("Person login, unique part of a name, or CmfPerson:<uuid>");
+const PersonSchema = z.string().trim().min(1).describe("Exact EvaTeam login, unique part of a name, or CmfPerson:<uuid>. Reuse a known reference instead of searching again.");
 const StatusTypeSchema = z
   .enum(["OPEN", "IN_PROGRESS", "IN_REVIEW", "CLOSED"])
   .describe("Status type (cache_status_type)");
 
 const PersonSearchSchema = z.object({
-  query: z.string().describe("Part of a name or login, for example Petrov"),
+  query: z.string().trim().min(1).describe("Part of an EvaTeam name or login, for example Petrov"),
   limit: z.number().int().positive().max(100).optional().default(20),
-});
+}).strict();
 
 const PersonGetSchema = z.object({
   person: PersonSchema,
-});
+}).strict();
+
+const WhoamiSchema = z.object({}).strict();
 
 const MyTasksSchema = z.object({
   role: z
     .enum(["responsible", "owner", "waiting"])
     .optional()
     .default("responsible")
-    .describe('"responsible": assigned to the person; "owner": reported by the person; "waiting": waiting for the person\'s answer'),
-  person: PersonSchema.optional().describe("Whose tasks to list. Defaults to the user configured by EVA_USER_LOGIN."),
+    .describe('Defaults to "responsible" (assigned tasks) for "my tasks". Use "owner" (reported by the person) or "waiting" (waiting for their answer) only when requested.'),
+  person: PersonSchema.optional().describe("Omit for my tasks: uses EVA_USER_LOGIN automatically, without a preliminary whoami. For another person or an invalid configured login, pass a known login or CmfPerson:<uuid>."),
   statusType: StatusTypeSchema.optional().describe("Only tasks with this status type. Defaults to all tasks that are not CLOSED."),
-  projectCode: z.string().optional().describe("Only tasks from this project"),
-  limit: z.number().int().positive().max(200).optional().default(50),
-  fields: z.array(z.string()).optional().describe("Task fields to return"),
-});
+  projectCode: z.string().trim().min(1).optional().describe("Only tasks from this project; resolved internally, without a preliminary project lookup"),
+  limit: z.number().int().positive().max(200).optional().default(50)
+    .describe("Maximum tasks to return, 1–200, default 50. Increase only if hasMore is true and more tasks are needed. A larger limit repeats the same selection from the beginning."),
+  fields: z.array(z.string()).optional().describe("Task fields to return. Defaults already include code, name, readable status, assignee, project, and modification time."),
+}).strict();
 
 const ROLE_FIELDS = {
   responsible: "responsible",
@@ -45,7 +48,8 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
     {
       definition: {
         name: "person_search",
-        description: "Find EvaTeam users by part of a name or login",
+        description: "Find EvaTeam users by part of a name or login. Returns id, code, name, and login. Reuse the selected id or login in subsequent calls; no person_get is needed to confirm the same result. For my tasks, call my_tasks directly first. A configured-login error can be recovered with one search using a known name or login fragment; do not guess the current user's identity.",
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(PersonSearchSchema) as never,
       },
       handler: async (args) => {
@@ -56,7 +60,8 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
     {
       definition: {
         name: "person_get",
-        description: "Get one EvaTeam user by login, unique part of a name, or CmfPerson reference",
+        description: "Read one EvaTeam user by an exact login, unique name fragment, or CmfPerson reference in person. Use whoami for the configured user, or my_tasks directly for their tasks. Reuse a person_search result if it already contains the information needed.",
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(PersonGetSchema) as never,
       },
       handler: async (args) => {
@@ -67,16 +72,21 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
     {
       definition: {
         name: "whoami",
-        description: "Get the EvaTeam user configured by EVA_USER_LOGIN; this does not verify who owns the API token",
-        inputSchema: zodToJsonSchema(z.object({})) as never,
+        description: "Read the user configured by EVA_USER_LOGIN. This does not identify the API token owner. Takes no arguments. Use for questions about the configured user's identity; my_tasks resolves that user internally and does not need whoami first. If the configured login is missing or not found, follow the error's recovery steps instead of retrying unchanged.",
+        annotations: { readOnlyHint: true },
+        inputSchema: zodToJsonSchema(WhoamiSchema) as never,
       },
-      handler: async () => json(await personClient.getCurrentUser()),
+      handler: async (args) => {
+        WhoamiSchema.parse(args);
+        return json(await personClient.getCurrentUser());
+      },
     },
     {
       definition: {
         name: "my_tasks",
         description:
-          "List open tasks of the user configured by EVA_USER_LOGIN (or an explicit person); hasMore indicates that the list was limited",
+          'List non-closed tasks assigned to the configured user. For "my tasks", call directly with {}: no whoami, person_search, or project lookup is needed first. Returns person, role, tasks, and hasMore. Default role is responsible; query owner or waiting only when requested. When hasMore is false, the selection is complete; increase limit only when hasMore is true and more tasks are needed (maximum 200). Reuse returned task details instead of fetching every task again.',
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(MyTasksSchema) as never,
       },
       handler: async (args) => {

@@ -78,6 +78,45 @@ test("configured user is resolved by login and cached", async () => {
   assert.deepEqual(f.calls[0]?.params.kwargs.filter, ["login", "==", "test-user"]);
 });
 
+test("an unmatched configured login explains recovery without retrying whoami", async () => {
+  const api = { async rpc() { return null; } } as unknown as EvaTeamClient;
+  const people = new EvaPersonClient(api, "wrong-login");
+  await assert.rejects(() => people.getCurrentUser(), error => {
+    assert.ok(error instanceof Error);
+    assert.match(error.message, /EVA_USER_LOGIN user not found: wrong-login/);
+    assert.match(error.message, /person_search/);
+    assert.match(error.message, /my_tasks/);
+    assert.match(error.message, /[Dd]o not retry/);
+    return true;
+  });
+});
+
+test("my_tasks directly resolves and caches the configured user without whoami", async () => {
+  const f = fixture("test-user");
+  f.setTasks(1);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const response = await f.tool("my_tasks").handler({});
+    const body = JSON.parse(response.content[0].text);
+    assert.equal(body.person.login, "test-user");
+    assert.equal(body.role, "responsible");
+    assert.equal(body.tasks.length, 1);
+    assert.equal(body.hasMore, false);
+  }
+  assert.equal(f.calls.filter(call => call.method === "CmfPerson.get").length, 1);
+  assert.deepEqual(f.calls.at(-1)?.params.kwargs.filter, [
+    ["responsible", "==", "CmfPerson:test"], ["cache_status_type", "!=", "CLOSED"],
+  ]);
+});
+
+test("people tools reject unknown parameters before any API request", async () => {
+  const f = fixture("test-user");
+  for (const name of ["whoami", "person_get", "person_search", "my_tasks"]) {
+    assert.equal(f.tool(name).definition.inputSchema.additionalProperties, false);
+    await assert.rejects(() => f.tool(name).handler({ query: "test", person: "test-user", task: "OPS-1994" }));
+  }
+  assert.equal(f.calls.length, 0);
+});
+
 test("my_tasks can query an explicit person without EVA_USER_LOGIN", async () => {
   const f = fixture();
   f.setTasks(1);

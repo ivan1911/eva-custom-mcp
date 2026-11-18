@@ -34,10 +34,12 @@ const TaskSearchSchema = QuerySchema.extend({
 });
 
 const TaskGetSchema = z.object({
-  code: z.string().optional().describe("Task code, for example DEV-000003"),
-  taskRef: z.string().optional().describe("Task object reference, for example CmfTask:<uuid>"),
-  fields: FieldsSchema.optional(),
-});
+  code: z.string().trim().min(1).optional().describe('Task code, e.g. "OPS-1994". Pass it as code, not task. Required unless taskRef is supplied.'),
+  taskRef: z.string().trim().min(1).optional().describe("Task object reference CmfTask:<uuid>. Use code for a human-readable task code. Required unless code is supplied."),
+  fields: FieldsSchema.optional().default(["*", "status.name", "responsible.name", "parent.name"])
+    .describe("Fields to return. Defaults include task fields and readable status, assignee, and project names. Request extra fields only when needed."),
+}).strict('Unknown argument: task_get accepts code, taskRef, and fields. For a task code use {"code":"OPS-1994"}; there is no task parameter.')
+  .describe("Provide code or taskRef. No task parameter. Prefer code when the task code is known.");
 
 const TaskCreateSchema = z.object({
   projectCode: z.string().optional().describe("Project code used as parent"),
@@ -72,8 +74,8 @@ const TaskCommentAddSchema = z.object({
 });
 
 const TaskCommentsListSchema = z.object({
-  code: z.string().describe("Task code, for example DEV-000003"),
-});
+  code: z.string().trim().min(1).describe('Task code, e.g. "OPS-1994". The parameter is code, not task.'),
+}).strict('Unknown argument: task_comments_list accepts code. Use {"code":"OPS-1994"}; there is no task parameter.');
 
 const TaskAssignSchema = z.object({
   taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
@@ -144,7 +146,8 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_search",
-        description: "Search EvaTeam tasks, optionally scoped by project code",
+        description: 'Search EvaTeam tasks by text or filters, optionally scoped by project code. When an exact task code is known, call task_get({"code":"OPS-1994"}) directly. For "my tasks", use my_tasks instead.',
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(TaskSearchSchema) as never,
       },
       handler: async (args) => {
@@ -156,12 +159,13 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_get",
-        description: "Get an EvaTeam task by code or object reference",
+        description: 'Read an EvaTeam task, including its current status. For a known code call directly: {"code":"OPS-1994"}; alternatively pass taskRef. At least one is required; there is no task parameter. Default fields include status.name. No task_search, project lookup, or comments call is needed for a status question. Reuse a successful result unless extra fields or fresh data are needed.',
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(TaskGetSchema) as never,
       },
       handler: async (args) => {
         const { code, taskRef, fields } = TaskGetSchema.parse(args);
-        if (!code && !taskRef) throw new Error("Either code or taskRef is required");
+        if (!code && !taskRef) throw new Error('Provide code or taskRef, for example {"code":"OPS-1994"}. The parameter is code, not task.');
         return json(taskRef ? await projectClient.getTaskById(taskRef, fields) : await projectClient.getTaskByCode(code as string, fields));
       },
     },
@@ -233,7 +237,8 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_comments_list",
-        description: "List task comments by loading CmfTask.get with comments.*",
+        description: 'Read task comments directly by code: {"code":"OPS-1994"}. No preliminary task_get is needed. Use when comments are requested or needed for context; task_get already provides the current status.',
+        annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(TaskCommentsListSchema) as never,
       },
       handler: async (args) => {
