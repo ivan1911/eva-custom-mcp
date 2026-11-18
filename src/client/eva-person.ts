@@ -71,10 +71,10 @@ export class EvaPersonClient {
     if (this.currentUser) return this.currentUser;
 
     const login = this.userLogin?.trim();
-    if (!login) throw new Error("Set EVA_USER_LOGIN to your EvaTeam login to use whoami or my_tasks without person.");
+    if (!login) throw new Error("Set EVA_USER_LOGIN to your exact EvaTeam login and restart the MCP server to use whoami or my_tasks without person. Do not retry unchanged. If a person is already known, call my_tasks with person; otherwise use person_search with a known name or login fragment to find the correct user.");
 
     const person = await this.getByLogin(login);
-    if (!person?.id) throw new Error(`EVA_USER_LOGIN user not found: ${login}`);
+    if (!person?.id) throw new Error(`EVA_USER_LOGIN user not found: ${login}. Do not retry whoami or my_tasks without person until the configuration changes. Use person_search with a known name or login fragment, then pass the selected id or login as person to my_tasks. Set EVA_USER_LOGIN to the exact returned login and restart the MCP server for future calls.`);
     this.currentUser = person;
     return this.currentUser;
   }

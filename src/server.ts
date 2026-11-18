@@ -25,7 +25,15 @@ export async function createServer() {
 
   const server = new Server(
     { name: "eva-custom-mcp", version: "0.1.6" },
-    { capabilities: { tools: {} } },
+    {
+      capabilities: { tools: {} },
+      instructions: config.apiToken ? [
+        'For a known task code, call task_get directly with {"code":"OPS-1994"}, not a task parameter. It includes the current status; no project lookup, task_search, or comments call is needed for a status question.',
+        'For "my tasks", call my_tasks with {} directly. It resolves EVA_USER_LOGIN internally and returns the person plus assigned non-closed tasks. No preliminary whoami or person_search is needed. Other roles (owner, waiting) are for explicit requests.',
+        "If EVA_USER_LOGIN is missing or not found, do not repeat the same failing call. Follow the error's recovery steps. Use a known person or one person_search by a known name/login fragment and pass the selected person explicitly; never infer identity from token ownership.",
+        "Reuse successful tool results. Repeat a read only for missing fields, changed parameters, or fresh data. If my_tasks hasMore is false, do not increase limit. If true, increase it only when more tasks are needed, up to 200; a larger limit returns the selection from the beginning.",
+      ].join("\n") : undefined,
+    },
   );
 
   const tools = [...registerGlossaryTools(glossaryClient)];
