@@ -230,6 +230,7 @@ Main rules:
 - Use `project_get_by_code` for project details; it is not a prerequisite for `task_get` or `my_tasks`.
 - Use `project_find_everything` for broad project searches.
 - For tasks:
+  - the task description/body is stored in `text`, not `description`; include `text` when selecting `fields` explicitly, and pass `text` to create or update the description;
   - use `task_search` to find tasks;
   - use `task_get` with `code` when a task code is known; `taskRef` is an alternative for a CmfTask:<uuid> reference; there is no `task` parameter;
   - use `my_tasks` with {} for my assigned non-closed tasks, without a preliminary `whoami` or person search;

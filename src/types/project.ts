@@ -15,7 +15,7 @@ export interface Task {
   code?: string;
   name?: string;
   summary?: string;
-  description?: string;
+  /** Task description/body, possibly HTML. EvaTeam field name: text. */
   text?: string;
   status?: unknown;
   responsible?: unknown;
@@ -32,8 +32,8 @@ export interface Task {
 
 export interface TaskMutation {
   name?: string;
+  /** Task description/body. Omit to leave it unchanged when updating. */
   text?: string;
-  description?: string;
   parent?: string | { id: string };
   status?: string | { id: string };
   responsible?: string | { id: string };

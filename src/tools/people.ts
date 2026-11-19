@@ -32,7 +32,7 @@ const MyTasksSchema = z.object({
   projectCode: z.string().trim().min(1).optional().describe("Only tasks from this project; resolved internally, without a preliminary project lookup"),
   limit: z.number().int().positive().max(200).optional().default(50)
     .describe("Maximum tasks to return, 1–200, default 50. Increase only if hasMore is true and more tasks are needed. A larger limit repeats the same selection from the beginning."),
-  fields: z.array(z.string()).optional().describe("Task fields to return. Defaults already include code, name, readable status, assignee, project, and modification time."),
+  fields: z.array(z.string()).optional().describe('Task fields to return. The task description/body is "text", not "description"; include "text" explicitly when needed. Defaults include code, name, readable status, assignee, project, and modification time, but omit the body.'),
 }).strict();
 
 const ROLE_FIELDS = {
@@ -85,7 +85,7 @@ export function registerPeopleTools(personClient: EvaPersonClient, projectClient
       definition: {
         name: "my_tasks",
         description:
-          'List non-closed tasks assigned to the configured user. For "my tasks", call directly with {}: no whoami, person_search, or project lookup is needed first. Returns person, role, tasks, and hasMore. Default role is responsible; query owner or waiting only when requested. When hasMore is false, the selection is complete; increase limit only when hasMore is true and more tasks are needed (maximum 200). Reuse returned task details instead of fetching every task again.',
+          'List non-closed tasks assigned to the configured user. For "my tasks", call directly with {}: no whoami, person_search, or project lookup is needed first. Returns person, role, tasks, and hasMore. Task descriptions are in text, not description; include "text" in fields when needed. Default role is responsible; query owner or waiting only when requested. When hasMore is false, the selection is complete; increase limit only when hasMore is true and more tasks are needed (maximum 200). Reuse returned task details instead of fetching every task again.',
         annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(MyTasksSchema) as never,
       },
