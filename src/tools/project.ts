@@ -8,6 +8,8 @@ import type { ToolDefinition } from "./index.js";
 
 const FilterSchema = z.array(z.unknown()).describe('EvaTeam BQL filter, for example ["code", "==", "PRJ"]');
 const FieldsSchema = z.array(z.string()).describe('Fields to return. Use ["*"], ["**"], ["***"], or explicit fields.');
+const TaskFieldsSchema = FieldsSchema.describe('Task fields to return. The task description/body is "text", not "description". For example ["code", "name", "text", "status.name"]. Use ["*"] for all task fields.');
+const TaskTextSchema = z.string().describe('Task description/body, stored in EvaTeam as "text", not "description". May contain HTML.');
 const SliceSchema = z.tuple([z.number(), z.number()]).describe("Result slice, for example [0, 20]");
 const OrderBySchema = z.array(z.string()).describe('Sort fields, for example ["-cmf_created_at"]');
 const PersonSchema = z.string().describe("Person login, unique part of a name, or CmfPerson:<uuid>");
@@ -26,6 +28,7 @@ const ProjectGetByCodeSchema = z.object({
 });
 
 const TaskSearchSchema = QuerySchema.extend({
+  fields: TaskFieldsSchema.optional(),
   projectCode: z.string().optional().describe("Optional project code to scope search"),
   query: z.string().optional().describe("Optional text/code search for task name or code"),
   status: z.string().optional().describe("Optional task status code"),
@@ -36,15 +39,15 @@ const TaskSearchSchema = QuerySchema.extend({
 const TaskGetSchema = z.object({
   code: z.string().trim().min(1).optional().describe('Task code, e.g. "OPS-1994". Pass it as code, not task. Required unless taskRef is supplied.'),
   taskRef: z.string().trim().min(1).optional().describe("Task object reference CmfTask:<uuid>. Use code for a human-readable task code. Required unless code is supplied."),
-  fields: FieldsSchema.optional().default(["*", "status.name", "responsible.name", "parent.name"])
-    .describe("Fields to return. Defaults include task fields and readable status, assignee, and project names. Request extra fields only when needed."),
+  fields: TaskFieldsSchema.optional().default(["*", "status.name", "responsible.name", "parent.name"])
+    .describe('Task fields to return. The task description/body is "text", not "description"; include "text" when selecting fields explicitly. Defaults include text via "*" and readable status, assignee, and project names.'),
 }).strict('Unknown argument: task_get accepts code, taskRef, and fields. For a task code use {"code":"OPS-1994"}; there is no task parameter.')
   .describe("Provide code or taskRef. No task parameter. Prefer code when the task code is known.");
 
 const TaskCreateSchema = z.object({
   projectCode: z.string().optional().describe("Project code used as parent"),
   name: z.string().describe("Task title"),
-  text: z.string().optional().describe("Task description/body"),
+  text: TaskTextSchema.optional(),
   responsible: PersonSchema.optional().describe("Assignee: login, unique part of a name, or CmfPerson:<uuid>"),
   owner: PersonSchema.optional().describe("Reporter (cmf_owner): login, unique part of a name, or CmfPerson:<uuid>"),
   status: z.string().optional(),
@@ -56,7 +59,7 @@ const TaskCreateSchema = z.object({
 const TaskUpdateSchema = z.object({
   taskRef: z.string().describe("Task object reference, for example CmfTask:<uuid>"),
   name: z.string().optional(),
-  text: z.string().optional(),
+  text: TaskTextSchema.optional(),
   responsible: PersonSchema.optional().describe("Assignee: login, unique part of a name, or CmfPerson:<uuid>"),
   owner: PersonSchema.optional().describe("Reporter (cmf_owner): login, unique part of a name, or CmfPerson:<uuid>"),
   status: z.string().optional(),
@@ -109,7 +112,7 @@ const ProjectFindEverythingSchema = z.object({
   projectCode: z.string(),
   query: z.string().optional(),
   limit: z.number().optional().default(10),
-  taskFields: FieldsSchema.optional(),
+  taskFields: TaskFieldsSchema.optional(),
   documentFields: FieldsSchema.optional(),
 });
 
@@ -146,7 +149,7 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_search",
-        description: 'Search EvaTeam tasks by text or filters, optionally scoped by project code. When an exact task code is known, call task_get({"code":"OPS-1994"}) directly. For "my tasks", use my_tasks instead.',
+        description: 'Search EvaTeam tasks by text or filters, optionally scoped by project code. Task descriptions are stored in text, not description; request "text" in fields to read them. When an exact task code is known, call task_get({"code":"OPS-1994"}) directly. For "my tasks", use my_tasks instead.',
         annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(TaskSearchSchema) as never,
       },
@@ -159,7 +162,7 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_get",
-        description: 'Read an EvaTeam task, including its current status. For a known code call directly: {"code":"OPS-1994"}; alternatively pass taskRef. At least one is required; there is no task parameter. Default fields include status.name. No task_search, project lookup, or comments call is needed for a status question. Reuse a successful result unless extra fields or fresh data are needed.',
+        description: 'Read an EvaTeam task, including its current status and description/body in text (not description). For a known code call directly: {"code":"OPS-1994"}; alternatively pass taskRef. At least one is required; there is no task parameter. Default fields include text and status.name. When selecting fields explicitly, include "text" to read the description. No task_search, project lookup, or comments call is needed for a status question. Reuse a successful result unless extra fields or fresh data are needed.',
         annotations: { readOnlyHint: true },
         inputSchema: zodToJsonSchema(TaskGetSchema) as never,
       },
@@ -172,7 +175,7 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_create",
-        description: "Create an EvaTeam task via CmfTask.create",
+        description: 'Create an EvaTeam task via CmfTask.create. Pass the task description/body in text, not description.',
         inputSchema: zodToJsonSchema(TaskCreateSchema) as never,
       },
       handler: async (args) => {
@@ -195,7 +198,7 @@ export function registerProjectTools(
     {
       definition: {
         name: "task_update",
-        description: "Update an EvaTeam task via CmfTask.update",
+        description: 'Update an EvaTeam task via CmfTask.update. Pass the task description/body in text, not description; omit text to leave the description unchanged.',
         inputSchema: zodToJsonSchema(TaskUpdateSchema) as never,
       },
       handler: async (args) => {
@@ -304,7 +307,7 @@ export function registerProjectTools(
     {
       definition: {
         name: "project_find_everything",
-        description: "Find tasks and wiki documents in a project with one query",
+        description: 'Find tasks and wiki documents in a project with one query. Task descriptions are stored in text, not description; include "text" in taskFields when needed, since the default task selection omits the body.',
         inputSchema: zodToJsonSchema(ProjectFindEverythingSchema) as never,
       },
       handler: async (args) => {
